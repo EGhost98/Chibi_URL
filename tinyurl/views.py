@@ -34,4 +34,4 @@ def redirect_url(request, shortened_part):
         shortener.save()
         return HttpResponseRedirect(shortener.long_url)
     except Shortener.DoesNotExist:
-        return render(request, 'tinyurl/404.html', status=404)
+        return render(request, 'tinyurl/404.html', status=404) # Custom 404 Errors
