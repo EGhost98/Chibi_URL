@@ -1,0 +1,24 @@
+{% extends 'tinyurl/base.html' %} {% block body %}
+<div class="row m-5">
+    <div class="col-md-8">
+        <table class="table">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">Created</th>
+                    <th scope="col">Short link</th>
+                    <th scope="col">Orignal orignal</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for purls in myurls %}
+                <tr>
+                    <td>{{ purls.created }}</td>
+                    <td>{{ purls.short_url }}</td>
+                    <td>{{ purls.long_url }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock body %}

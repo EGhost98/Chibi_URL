@@ -43,4 +43,6 @@ def redirect_url(request, shortened_part):
     except Shortener.DoesNotExist:
         return render(request, 'tinyurl/404.html', status=404) # Custom 404 Errors
 
-# def myurls()
+def myurls(request):
+    all_urls = Shortener.objects.filter(user_name = request.user)
+    return render(request, 'tinyurl/myurls.html' , {'myurls':all_urls})
