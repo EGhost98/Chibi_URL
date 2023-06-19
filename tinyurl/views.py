@@ -11,7 +11,6 @@ def index(request):
 
     if request.method == 'GET':
         return render(request, template, context)
-
     elif request.method == 'POST':
         used_form = ShortenerForm(request.POST)
         if used_form.is_valid():
@@ -22,7 +21,6 @@ def index(request):
             context['new_url'] = new_url
             context['long_url'] = long_url
             return render(request, template, context)
-
         context['errors'] = used_form.errors
         return render(request, template, context)
 
