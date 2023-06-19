@@ -96,10 +96,10 @@
                 </ul>
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <span class="nav-link text-light border rounded p-1" style="background-color: teal; color: black; line-height: 30px;">{{ user.username }}</span>
-                    </li>
+                        <span class="nav-link d-inline-block rounded-pill px-4 py-2 text-light" style="background-color: #17a2b8;">{{ user.username }}</span>
+                    </li>                                        
                     <li class="nav-item">
-                        <a class="nav-link btn btn-danger ms-3" style="height: 40px" href="{% url 'logout' %}">Logout</a>
+                        <a class="nav-link btn btn-danger ms-4" style="height: 40px" href="{% url 'logout' %}">Logout</a>
                     </li>
                 </ul>
                 {% else %}

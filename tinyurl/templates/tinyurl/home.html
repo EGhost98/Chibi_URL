@@ -95,12 +95,10 @@
                                 Times Clicked: {{ purls.times_followed }}
                             </h6>
                             <div class="d-flex align-items-center">
-                                <h6 href="#" class="card-text">
-                                    <span class="text-success">Short Link - </span>
-                                    {{ request.get_host }}/{{ purls.short_url }}
-                                </h6>
+                                <h5 href="#" class="card-text"><span class="text-success">Short Link - </span>{{ request.get_host }}/{{ purls.short_url }}
+                                </h5>
                                 <button
-                                    class="btn btn-secondary ms-5 btn-sm copy-btn"
+                                    class="btn btn-primary ms-5 btn-sm copy-btn"
                                     onclick="copyToClipboard('{{ request.get_host }}/{{ purls.short_url }}')"
                                     data-bs-toggle="tooltip"
                                     data-bs-placement="top"
@@ -110,12 +108,21 @@
                                 </button>
                                 <a
                                     href="{% url 'redirect_url' shortened_part=purls.short_url %}"
-                                    class="btn btn-info ms-3 btn-sm"
+                                    class="btn btn-warning ms-3 btn-sm"
                                     data-bs-toggle="tooltip"
                                     data-bs-placement="top"
                                     title="Visit URL"
                                 >
                                     <i class="fas fa-external-link-alt"></i>
+                                </a>
+                                <a
+                                    href="{% url 'delete_url' purls.id %}"
+                                    class="btn btn-danger ms-3 btn-sm"
+                                    data-bs-toggle="tooltip"
+                                    data-bs-placement="top"
+                                    title="Delete"
+                                >
+                                    <i class="fas fa-trash-alt"></i>
                                 </a>
                             </div>
                             <br>
