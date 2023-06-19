@@ -39,11 +39,10 @@
                                 Times Clicked: {{ purls.times_followed }}
                             </h6>
                             <div class="d-flex align-items-center">
-                                <h5 href="#" class="card-text">
-                                    Short Link: {{ request.get_host }}/{{purls.short_url }}
+                                <h5 href="#" class="card-text"><span class="text-success">Short Link - </span>{{ request.get_host }}/{{ purls.short_url }}
                                 </h5>
                                 <button
-                                    class="btn btn-primary ms-3 btn-sm copy-btn"
+                                    class="btn btn-primary ms-5 btn-sm copy-btn"
                                     onclick="copyToClipboard('{{ request.get_host }}/{{ purls.short_url }}')"
                                     data-bs-toggle="tooltip"
                                     data-bs-placement="top"
@@ -70,9 +69,8 @@
                                     <i class="fas fa-trash-alt"></i>
                                 </a>
                             </div>
-                            <p class="card-text">
-                                Original URL: {{ purls.long_url }}
-                            </p>
+                            <br>
+                            <p><span class="text-danger">Previous URL:</span> {{ purls.long_url }}</p>
                         </div>
                     </div>
                 </div>

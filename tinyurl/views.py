@@ -26,8 +26,7 @@ class index(View):
             shortened_object.save()
             new_url = request.build_absolute_uri('/') + shortened_object.short_url
             long_url = shortened_object.long_url
-            context['new_url'] = new_url
-            context['long_url'] = long_url
+            context['cur'] = shortened_object
         else:
             context['errors'] = form.errors
         return render(request, self.template_name, context)
