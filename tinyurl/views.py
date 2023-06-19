@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse, Http404, HttpResponseRedirect
 from .models import Shortener
 from .forms import ShortenerForm, SearchForm
@@ -56,7 +56,14 @@ def myurls(request):
             all_urls = Shortener.objects.filter(user_name=request.user)
     else:
         all_urls = Shortener.objects.filter(user_name=request.user)
-
     context['search_form'] = search_form
     context['myurls'] = all_urls
     return render(request, template, context)
+
+def delete_item(request, id):
+    itm = Shortener.objects.get(id=id)
+    if request.method == 'POST':
+        itm.delete()
+        return redirect('myurls')
+    context = {'itm': itm}
+    return render(request, 'tinyurl/delete.html', context)
