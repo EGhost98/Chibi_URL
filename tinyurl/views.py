@@ -14,6 +14,9 @@ class index(View):
 
     def get(self, request):
         context = {'form': self.form_class()}
+        if request.user.is_authenticated:
+            last_entries = Shortener.objects.filter(user_name=request.user).order_by('-created')[:4]
+            context['last4'] = last_entries
         return render(request, self.template_name, context)
 
     def post(self, request):
@@ -24,11 +27,12 @@ class index(View):
             if request.user.is_authenticated:
                 shortened_object.user_name = request.user
             shortened_object.save()
-            new_url = request.build_absolute_uri('/') + shortened_object.short_url
-            long_url = shortened_object.long_url
             context['cur'] = shortened_object
         else:
             context['errors'] = form.errors
+        if request.user.is_authenticated:
+            last_entries = Shortener.objects.filter(user_name=request.user).order_by('-created')[1:5]
+            context['last4'] = last_entries
         return render(request, self.template_name, context)
 
 
@@ -67,10 +71,18 @@ def myurls(request):
 
     return render(request, template, context)
 
+# return render(request,'tinyurl/403.html',status=403)
+
 def delete_item(request, id):
-    itm = Shortener.objects.get(id=id)
-    if request.method == 'POST':
-        itm.delete()
-        return redirect('myurls')
+    if request.user.is_authenticated:
+        itm = Shortener.objects.get(id=id)
+        if request.user.is_superuser or request.user == itm.user_name:
+            if request.method == 'POST':
+                itm.delete()
+                return redirect('myurls')
+        else:
+            return render(request,'tinyurl/403.html',status=403)  # Return 403 Forbidden response
+    else:
+        return render(request,'tinyurl/403.html',status=403)  # Return 403 Forbidden response
     context = {'itm': itm}
     return render(request, 'tinyurl/delete.html', context)
