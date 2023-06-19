@@ -17,6 +17,7 @@ class Shortener(models.Model):
     times_followed = models.PositiveIntegerField(default=0)
     long_url = models.URLField()
     short_url = models.CharField(max_length=15, unique=True, blank=True)
+    url_index = models.CharField(max_length=100, blank=True)
 
     class Meta:
         ordering = ["-created"]

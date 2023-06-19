@@ -1,24 +1,67 @@
 {% extends 'tinyurl/base.html' %} {% block body %}
-<div class="row m-5">
-    <div class="col-md-8">
-        <table class="table">
-            <thead class="thead-dark">
-                <tr>
-                    <th scope="col">Created</th>
-                    <th scope="col">Short link</th>
-                    <th scope="col">Orignal orignal</th>
-                </tr>
-            </thead>
-            <tbody>
+<div class="container mt-5">
+    <div class="card">
+        <div class="card-header text-center py-3">
+            <h1>URL Shortener <i class="fas fa-link px-2"></i></h1>
+        </div>
+        <div class="card-body">
+            <form method="GET" class="mb-3" id="search-form">
+                <div class="input-group">
+                    {{ search_form.query }}
+                    <button
+                        class="btn btn-success"
+                        type="submit"
+                        form="search-form"
+                    >
+                        Search
+                    </button>
+                    <a class="btn btn-danger ms-2" href="{% url 'myurls' %}">
+                        Reset
+                    </a>
+                </div>
+            </form>
+            <div class="row m-5">
                 {% for purls in myurls %}
-                <tr>
-                    <td>{{ purls.created }}</td>
-                    <td>{{ purls.short_url }}</td>
-                    <td>{{ purls.long_url }}</td>
-                </tr>
+                <div class="col-md-6 mb-4">
+                    <div class="card h-100">
+                        <div class="card-body d-flex flex-column justify-content-between">
+                            <h2 class="card-title">{{ purls.url_index }}</h2>
+                            <h5 class="card-title">Created: {{ purls.created|date:"F d, Y H:i:s" }}</h5>
+                            <p class="card-text">Short Link: {{ purls.short_url }}</p>
+                            <p class="card-text lemon-green">Original URL: {{ purls.long_url }}</p>
+                            <div>
+                                <a href="#" class="btn btn-primary">Edit</a>
+                                <a href="#" class="btn btn-danger">Delete</a>
+                                <a href="#" class="btn btn-secondary">Details</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 {% endfor %}
-            </tbody>
-        </table>
+            </div>           
+        </div>
     </div>
 </div>
 {% endblock body %}
+<style>
+    .lemon-green {
+        color: #9acd32; /* Lemon green color */
+    }
+    .card-header {
+        background-color: #f8f9fa; /* Light gray background color */
+        font-size: 24px;
+    }
+    .card-body {
+        padding: 20px;
+    }
+    .input-group {
+        margin-bottom: 10px;
+    }
+    .btn-success,
+    .btn-danger {
+        height: 40px;
+    }
+    .card {
+        height: 100%;
+    }
+</style>

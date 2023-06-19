@@ -7,8 +7,8 @@ admin.site.index_title = "Manage URL Shortener"
 
 class TinyAdmin(admin.ModelAdmin):
     
-    list_display = ('user_name','created','long_url','short_url',)
-    search_fields = ('long_url',)
+    list_display = ('user_name','created','url_index','short_url','long_url',)
+    search_fields = ('long_url','url_index',)
 
 
 admin.site.register(Shortener,TinyAdmin)

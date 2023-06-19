@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse, Http404, HttpResponseRedirect
 from .models import Shortener
-from .forms import ShortenerForm
+from .forms import ShortenerForm, SearchForm
 from django.views import View
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
@@ -24,7 +24,6 @@ class index(View):
             if request.user.is_authenticated:
                 shortened_object.user_name = request.user
             shortened_object.save()
-            # shortened_object.user_name = request.user
             new_url = request.build_absolute_uri('/') + shortened_object.short_url
             long_url = shortened_object.long_url
             context['new_url'] = new_url
@@ -44,5 +43,20 @@ def redirect_url(request, shortened_part):
         return render(request, 'tinyurl/404.html', status=404) # Custom 404 Errors
 
 def myurls(request):
-    all_urls = Shortener.objects.filter(user_name = request.user)
-    return render(request, 'tinyurl/myurls.html' , {'myurls':all_urls})
+    template = 'tinyurl/myurls.html'
+    context = {}
+    # Process the search form
+    search_form = SearchForm(request.GET)
+    if search_form.is_valid():
+        query = search_form.cleaned_data.get('query')
+        # Filter the queryset based on the search query
+        if query:
+            all_urls = Shortener.objects.filter(user_name=request.user).filter(url_index__icontains=query) | Shortener.objects.filter(user_name=request.user).filter(long_url__icontains=query) | Shortener.objects.filter(user_name=request.user).filter(short_url__icontains=query)
+        else:
+            all_urls = Shortener.objects.filter(user_name=request.user)
+    else:
+        all_urls = Shortener.objects.filter(user_name=request.user)
+
+    context['search_form'] = search_form
+    context['myurls'] = all_urls
+    return render(request, template, context)
