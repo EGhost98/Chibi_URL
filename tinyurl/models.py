@@ -1,6 +1,7 @@
 from django.db import models
 from .utils import create_shortened_url
-
+from django.contrib.auth.models import User
+from django.urls import reverse
 # At the end of the  Shortener model
 
 class Shortener(models.Model):
@@ -11,6 +12,7 @@ class Shortener(models.Model):
     long_url -> The original link
     short_url ->  shortened link https://domain/(short_url)
     '''
+    user_name = models.ForeignKey(User, on_delete=models.CASCADE,default=1)
     created = models.DateTimeField(auto_now_add=True)
     times_followed = models.PositiveIntegerField(default=0)
     long_url = models.URLField()
@@ -27,3 +29,6 @@ class Shortener(models.Model):
         if not self.short_url:
             self.short_url = create_shortened_url(self) # We pass the model instance that is being saved
         super().save(*args, **kwargs)
+    
+    # def get_absolute_url(self):
+    #     return reverse("index", kwargs={"pk": self.pk})
