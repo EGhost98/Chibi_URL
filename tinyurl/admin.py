@@ -11,4 +11,4 @@ class TinyAdmin(admin.ModelAdmin):
     search_fields = ('long_url','url_index',)
 
 
-admin.site.register(Shortener,TinyAdmin)
+admin.site.register(Shortener,TinyAdmin,)

@@ -15,4 +15,4 @@ class ShortenerForm(forms.ModelForm):
         fields = ('long_url', 'url_index',)
 
 class SearchForm(forms.Form):
-    query = forms.CharField(max_length=100, required=False, widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Search by index or URL'}))
+    query = forms.CharField(max_length=100, required=False, widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Search by index or URL'})) # SearcForm in MYURL's to query based on index or URL

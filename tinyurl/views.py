@@ -48,7 +48,6 @@ def redirect_url(request, shortened_part):
 def myurls(request):
     template = 'tinyurl/myurls.html'
     context = {}
-
     # Process the search form
     search_form = SearchForm(request.GET)
     if search_form.is_valid():
@@ -65,13 +64,10 @@ def myurls(request):
     paginator = Paginator(all_urls, 10)  # Display 10 items per page
     page_number = request.GET.get('page')
     urls_page = paginator.get_page(page_number)
-
     context['search_form'] = search_form
     context['myurls'] = urls_page
-
     return render(request, template, context)
 
-# return render(request,'tinyurl/403.html',status=403)
 
 def delete_item(request, id):
     if request.user.is_authenticated:
