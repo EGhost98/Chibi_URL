@@ -64,20 +64,22 @@
                     </ul>
                     {% else %}
                     <ul class="navbar-nav">
+                        {% if not request.path == '/register/' %}
                         <li class="nav-item">
                             <a
                                 class="nav-link btn btn-primary me-2"
                                 href="{% url 'register' %}"
-                                >SignUp</a
+                                >Register</a
                             >
                         </li>
+                        {% endif %}
+                        {% if not request.path == '/login/' %}
                         <li class="nav-item">
-                            <a
-                                class="nav-link btn btn-success"
-                                href="{% url 'login' %}"
-                                >SignIn</a
-                            >
+                            <a class="nav-link btn btn-success" href="{% url 'login' %}">
+                                <span style="color: white;">Login</span>
+                            </a>                            
                         </li>
+                        {% endif %}
                     </ul>
                     {% endif %}
                 </div>
