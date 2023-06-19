@@ -7,7 +7,7 @@ from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 
 
-@method_decorator(login_required, name='dispatch')
+# @method_decorator(login_required, name='dispatch')
 class index(View):
     template_name = 'tinyurl/home.html'
     form_class = ShortenerForm
@@ -29,7 +29,6 @@ class index(View):
             context['long_url'] = long_url
         else:
             context['errors'] = form.errors
-
         return render(request, self.template_name, context)
 
 
