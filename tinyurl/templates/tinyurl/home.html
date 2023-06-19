@@ -1,6 +1,8 @@
-{% extends 'tinyurl/base.html' %}
-{% block body %}
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+{% extends 'tinyurl/base.html' %} {% block body %}
+<link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+/>
 <div class="container">
     <div class="card mt-5">
         <div class="card-header text-center py-3">
@@ -29,15 +31,25 @@
     </div>
     {% endif %} {% if new_url %}
     <div class="mx-auto text-center mt-5">
-        <h2 class="text-danger">Your shortened Url</h2>
-        <p>You can copy the Link below and share it with your friends</p>
+        <h2 class="text-danger">Your shortened URL</h2>
+        <p>You can copy the link below and share it with your friends</p>
         <a>{{new_url}}</a>
-        <button class="btn btn-primary" onclick="copyToClipboard('{{ new_url }}')">
-            <i class="fas fa-copy"></i> Copy
-        </button>
-    </br>
-        <p><span class="text-danger">Previous URL:</span> {{long_url}}</p>
+        <br />
+        <div class="d-flex justify-content-center align-items-center">
+            <a href="{{ new_url }}" class="btn btn-primary me-2">
+                <i class="fas fa-external-link-alt"></i> Visit URL
+            </a>
+            <button
+                class="btn btn-primary"
+                onclick="copyToClipboard('{{ new_url }}')"
+            >
+                <i class="fas fa-copy"></i> Copy
+            </button>
+        </div>
+        <br />
+        <p><span class="text-danger">Previous URL:</span> {{ long_url }}</p>
     </div>
+
     {% endif %}
 </div>
 
@@ -45,7 +57,8 @@
     function showNotification(message) {
         var notification = document.createElement("div");
         notification.className = "notification success";
-        notification.innerHTML = '<span class="notification-icon">&#10004;</span>' + message;
+        notification.innerHTML =
+            '<span class="notification-icon">&#10004;</span>' + message;
         document.body.appendChild(notification);
 
         setTimeout(function () {
@@ -69,17 +82,27 @@
 <style>
     .notification {
         position: fixed;
-        top: 65px;
+        top: 60px;
         right: 10px;
-        padding: 4px;
-        background-color: #4CAF50;
-        color: #fff;
+        padding: 10px;
+        background-color: #e0f4e0;
+        color: #000;
         display: flex;
         align-items: center;
     }
 
     .notification.success {
-        background-color: #4CAF50;
+        background-color: #b4e8b4;
+    }
+
+    .notification:before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 5px;
+        background-color: #327932;
     }
 
     .notification-icon {
@@ -91,10 +114,9 @@
         margin-left: 5px;
         border-radius: 50%;
         background-color: #fff;
-        color: #4CAF50;
+        color: #4caf50;
         font-weight: bold;
     }
 </style>
-
 
 {% endblock body %}

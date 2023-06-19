@@ -21,8 +21,10 @@ class index(View):
         context = {'form': form}
         if form.is_valid():
             shortened_object = form.save(commit=False)
-            shortened_object.user_name = request.user
+            if request.user.is_authenticated:
+                shortened_object.user_name = request.user
             shortened_object.save()
+            # shortened_object.user_name = request.user
             new_url = request.build_absolute_uri('/') + shortened_object.short_url
             long_url = shortened_object.long_url
             context['new_url'] = new_url
@@ -40,3 +42,5 @@ def redirect_url(request, shortened_part):
         return HttpResponseRedirect(shortener.long_url)
     except Shortener.DoesNotExist:
         return render(request, 'tinyurl/404.html', status=404) # Custom 404 Errors
+
+# def myurls()

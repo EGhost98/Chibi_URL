@@ -12,7 +12,7 @@ class Shortener(models.Model):
     long_url -> The original link
     short_url ->  shortened link https://domain/(short_url)
     '''
-    user_name = models.ForeignKey(User, on_delete=models.CASCADE,default=1)
+    user_name = models.ForeignKey(User, on_delete=models.CASCADE,default=9)
     created = models.DateTimeField(auto_now_add=True)
     times_followed = models.PositiveIntegerField(default=0)
     long_url = models.URLField()

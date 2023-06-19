@@ -7,4 +7,5 @@ urlpatterns = [
     # Home view
     path('', views.index.as_view(), name='index'),
     path('<str:shortened_part>', views.redirect_url, name='redirect_url'),
+    # path('my-urls',views.myurls, name='my-urls'),
 ]
