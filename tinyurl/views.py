@@ -5,7 +5,7 @@ from .forms import ShortenerForm, SearchForm
 from django.views import View
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
-
+from django.core.paginator import Paginator
 
 # @method_decorator(login_required, name='dispatch')
 class index(View):
@@ -45,6 +45,7 @@ def redirect_url(request, shortened_part):
 def myurls(request):
     template = 'tinyurl/myurls.html'
     context = {}
+
     # Process the search form
     search_form = SearchForm(request.GET)
     if search_form.is_valid():
@@ -56,8 +57,15 @@ def myurls(request):
             all_urls = Shortener.objects.filter(user_name=request.user)
     else:
         all_urls = Shortener.objects.filter(user_name=request.user)
+
+    # Pagination
+    paginator = Paginator(all_urls, 10)  # Display 10 items per page
+    page_number = request.GET.get('page')
+    urls_page = paginator.get_page(page_number)
+
     context['search_form'] = search_form
-    context['myurls'] = all_urls
+    context['myurls'] = urls_page
+
     return render(request, template, context)
 
 def delete_item(request, id):

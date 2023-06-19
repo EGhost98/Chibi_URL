@@ -1,4 +1,4 @@
-{% extends 'tinyurl/base.html' %} {% block body %}\
+{% extends 'tinyurl/base.html' %} {% block body %}
 <link
     rel="stylesheet"
     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
@@ -39,19 +39,39 @@
                                 Times Clicked: {{ purls.times_followed }}
                             </h6>
                             <div class="d-flex align-items-center">
-                                <h5 class="card-text">Short Link: {{ request.get_host }}/{{ purls.short_url }}</h5>
+                                <h5 href="#" class="card-text">
+                                    Short Link: {{ request.get_host }}/{{
+                                    purls.short_url }}
+                                </h5>
+                                <button
+                                    class="btn btn-primary ms-3 btn-sm copy-btn"
+                                    onclick="copyToClipboard('{{ request.get_host }}/{{ purls.short_url }}')"
+                                    data-bs-toggle="tooltip"
+                                    data-bs-placement="top"
+                                    title="Copy to Clipboard"
+                                >
+                                    <i class="fas fa-copy"></i>
+                                </button>
                                 <a
                                     href="{% url 'redirect_url' shortened_part=purls.short_url %}"
                                     class="btn btn-primary ms-3 btn-sm"
-                                    data-toggle="tooltip"
-                                    data-placement="top"
+                                    data-bs-toggle="tooltip"
+                                    data-bs-placement="top"
                                     title="Visit URL"
                                 >
                                     <i class="fas fa-external-link-alt"></i>
                                 </a>
-                                <a href="{% url 'delete_url' purls.id %}" class="btn btn-danger ms-3 btn-sm">Delete</a>
+                                <a
+                                    href="{% url 'delete_url' purls.id %}"
+                                    class="btn btn-danger ms-3 btn-sm"
+                                    data-bs-toggle="tooltip"
+                                    data-bs-placement="top"
+                                    title="Delete"
+                                >
+                                    <i class="fas fa-trash-alt"></i>
+                                </a>
                             </div>
-                            <p class="card-text lemon-green">
+                            <p class="card-text">
                                 Original URL: {{ purls.long_url }}
                             </p>
                         </div>
@@ -62,26 +82,121 @@
         </div>
     </div>
 </div>
-{% endblock body %}
+<div class="pagination text-center mt-4 d-flex justify-content-center">
+    <ul class="pagination justify-content-center">
+        {% if myurls.has_previous %}
+            <li class="page-item">
+                <a class="page-link" href="?page=1" aria-label="First">
+                    <span aria-hidden="true">&laquo;&laquo;</span>
+                </a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" href="?page={{ myurls.previous_page_number }}" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+        {% endif %}
+        
+        {% for i in myurls.paginator.page_range %}
+            {% if myurls.number == i %}
+                <li class="page-item active">
+                    <a class="page-link" href="?page={{ i }}">{{ i }}</a>
+                </li>
+            {% elif i > myurls.number|add:"-3" and i < myurls.number|add:"3" %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ i }}">{{ i }}</a>
+                </li>
+            {% endif %}
+        {% endfor %}
+        
+        {% if myurls.has_next %}
+            <li class="page-item">
+                <a class="page-link" href="?page={{ myurls.next_page_number }}" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" href="?page={{ myurls.paginator.num_pages }}" aria-label="Last">
+                    <span aria-hidden="true">&raquo;&raquo;</span>
+                </a>
+            </li>
+        {% endif %}
+    </ul>
+</div>
+<script>
+    function showNotification(message) {
+        var notification = document.createElement("div");
+        notification.className = "notification success";
+        notification.innerHTML =
+            '<span class="notification-icon">&#10004;</span>' + message;
+        document.body.appendChild(notification);
+
+        setTimeout(function () {
+            notification.style.display = "none";
+            document.body.removeChild(notification);
+        }, 3000); // Display the notification for 3 seconds
+    }
+
+    function copyToClipboard(text) {
+        var dummy = document.createElement("textarea");
+        document.body.appendChild(dummy);
+        dummy.value = text;
+        dummy.select();
+        document.execCommand("copy");
+        document.body.removeChild(dummy);
+
+        showNotification("Copied to clipboard!");
+    }
+</script>
 <style>
-    .lemon-green {
-        color: #9acd32; /* Lemon green color */
+    .notification {
+        position: fixed;
+        top: 60px;
+        right: 10px;
+        padding: 10px;
+        background-color: #e0f4e0;
+        color: #000;
+        display: flex;
+        align-items: center;
+        animation: fade-in 0.3s ease-in-out;
     }
-    .card-header {
-        background-color: #f8f9fa; /* Light gray background color */
-        font-size: 24px;
+
+    .notification.success {
+        background-color: #b4e8b4;
     }
-    .card-body {
-        padding: 20px;
-    }
-    .input-group {
-        margin-bottom: 10px;
-    }
-    .btn-success,
-    .btn-danger {
-        height: 40px;
-    }
-    .card {
+
+    .notification:before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
         height: 100%;
+        width: 5px;
+        background-color: #327932;
+    }
+
+    .notification-icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 24px;
+        height: 24px;
+        margin-left: 5px;
+        border-radius: 50%;
+        background-color: #fff;
+        color: #4caf50;
+        font-weight: bold;
+    }
+
+    @keyframes fade-in {
+        0% {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        100% {
+            opacity: 1;
+            transform: translateY(0);
+        }
     }
 </style>
+{% endblock body %}
