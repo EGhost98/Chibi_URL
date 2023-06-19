@@ -1,5 +1,6 @@
-{% extends 'tinyurl/base.html' %} {% block body %}
-
+{% extends 'tinyurl/base.html' %}
+{% block body %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 <div class="container">
     <div class="card mt-5">
         <div class="card-header text-center py-3">
@@ -30,9 +31,70 @@
     <div class="mx-auto text-center mt-5">
         <h2 class="text-danger">Your shortened Url</h2>
         <p>You can copy the Link below and share it with your friends</p>
-        <a href="{{new_url}}">{{new_url}}</a>
+        <a>{{new_url}}</a>
+        <button class="btn btn-primary" onclick="copyToClipboard('{{ new_url }}')">
+            <i class="fas fa-copy"></i> Copy
+        </button>
+    </br>
         <p><span class="text-danger">Previous URL:</span> {{long_url}}</p>
     </div>
     {% endif %}
 </div>
+
+<script>
+    function showNotification(message) {
+        var notification = document.createElement("div");
+        notification.className = "notification success";
+        notification.innerHTML = '<span class="notification-icon">&#10004;</span>' + message;
+        document.body.appendChild(notification);
+
+        setTimeout(function () {
+            notification.style.display = "none";
+            document.body.removeChild(notification);
+        }, 3000); // Display the notification for 3 seconds
+    }
+
+    function copyToClipboard(text) {
+        var dummy = document.createElement("textarea");
+        document.body.appendChild(dummy);
+        dummy.value = text;
+        dummy.select();
+        document.execCommand("copy");
+        document.body.removeChild(dummy);
+
+        showNotification("Copied to clipboard!");
+    }
+</script>
+
+<style>
+    .notification {
+        position: fixed;
+        top: 65px;
+        right: 10px;
+        padding: 4px;
+        background-color: #4CAF50;
+        color: #fff;
+        display: flex;
+        align-items: center;
+    }
+
+    .notification.success {
+        background-color: #4CAF50;
+    }
+
+    .notification-icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 24px;
+        height: 24px;
+        margin-left: 5px;
+        border-radius: 50%;
+        background-color: #fff;
+        color: #4CAF50;
+        font-weight: bold;
+    }
+</style>
+
+
 {% endblock body %}
