@@ -1,32 +1,26 @@
 {% extends 'tinyurl/base.html' %} {% block body %}
 <div class="container mt-5">
     <div class="card">
-        <div class="card-header text-center py-3">
-            <h1>URL Shortener <i class="fas fa-link px-2"></i></h1>
+        <div class="card-header text-center py-3 bg-dark text-white">
+            <h1 class="fadeInUp">URL Shortener <i class="fas fa-link px-2"></i></h1>
         </div>
         <div class="card-body">
             <form method="GET" class="mb-3" id="search-form">
                 <div class="input-group">
                     {{ search_form.query }}
-                    <button
-                        class="btn btn-success"
-                        type="submit"
-                        form="search-form"
-                    >
-                        Search
+                    <button class="btn btn-success" type="submit" form="search-form">
+                        <i class="fas fa-search"></i> Search
                     </button>
-                    <a class="btn btn-danger ms-2" href="{% url 'myurls' %}"
-                        >Reset</a
-                    >
+                    <a class="btn btn-danger ms-2" href="{% url 'myurls' %}">
+                        Reset
+                    </a>
                 </div>
             </form>
             <div class="row m-5">
                 {% for purls in myurls %}
                 <div class="col-md-6 mb-4">
-                    <div class="card h-100">
-                        <div
-                            class="card-body d-flex flex-column justify-content-between"
-                        >
+                    <div class="card h-100 bg-dark text-white">
+                        <div class="card-body d-flex flex-column justify-content-between">
                             <h2 class="card-title">{{ purls.url_index }}</h2>
                             <h6 class="card-title">
                                 Created: {{ purls.created|date:"F d, Y H:i:s" }}
@@ -38,13 +32,12 @@
                                 <h5 href="#" class="card-text"><span class="text-success">Short Link - </span>{{ request.get_host }}/{{ purls.short_url }}
                                 </h5>
                                 <button
-                                    class="btn btn-primary ms-5 btn-sm copy-btn"
-                                    onclick="copyToClipboard('{{ request.get_host }}/{{ purls.short_url }}')"
-                                    data-bs-toggle="tooltip"
-                                    data-bs-placement="top"
-                                    title="Copy to Clipboard"
-                                >
-                                    <i class="fas fa-copy"></i>
+                                class="btn btn-primary ms-5 btn-sm copy-btn"
+                                onclick="copyToClipboard('{{ request.get_host }}/{{ purls.short_url }}')"
+                                data-bs-toggle="tooltip"
+                                data-bs-placement="top"
+                                title="Copy to Clipboard">
+                                <i class="fas fa-copy"></i>
                                 </button>
                                 <a
                                     href="{% url 'redirect_url' shortened_part=purls.short_url %}"
@@ -141,57 +134,6 @@
         showNotification("Copied to clipboard!");
     }
 </script>
-<style>
-    .notification {
-        position: fixed;
-        top: 60px;
-        right: 10px;
-        padding: 10px;
-        background-color: #e0f4e0;
-        color: #000;
-        display: flex;
-        align-items: center;
-        animation: fade-in 0.3s ease-in-out;
-    }
-
-    .notification.success {
-        background-color: #b4e8b4;
-    }
-
-    .notification:before {
-        content: "";
-        position: absolute;
-        top: 0;
-        left: 0;
-        height: 100%;
-        width: 5px;
-        background-color: #327932;
-    }
-
-    .notification-icon {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 24px;
-        height: 24px;
-        margin-left: 5px;
-        border-radius: 50%;
-        background-color: #fff;
-        color: #4caf50;
-        font-weight: bold;
-    }
-
-    @keyframes fade-in {
-        0% {
-            opacity: 0;
-            transform: translateY(20px);
-        }
-        100% {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    }
-</style>
 <style>
     body {
         font-family: Arial, sans-serif;
@@ -316,4 +258,5 @@
         }
     }
 </style>
+
 {% endblock body %}
