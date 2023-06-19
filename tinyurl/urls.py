@@ -1,7 +1,7 @@
 from django.urls import path
 from . import views
 
-appname = "shortener"
+# app_name = "shortener"
 
 urlpatterns = [
     # Home view
