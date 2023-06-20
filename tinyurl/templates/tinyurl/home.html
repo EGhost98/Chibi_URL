@@ -73,7 +73,8 @@
                         </div>
                         <br />
                         <p>
-                            <span class="text-danger">Previous URL:</span> {{cur.long_url }}
+                            <span class="text-danger">Previous URL:</span>
+                            {{cur.long_url }}
                         </p>
                     </div>
                 </div>
@@ -92,23 +93,23 @@
         <div class="card-body">
             <div class="row m-5">
                 {% for purls in last4 %}
-                <div class="col-md-6 mb-4">
-                    <div class="card h-100">
+                <div class="col-md-6 col-lg-4 mb-4">
+                    <div class="card h-100 custom-card">
                         <div
                             class="card-body d-flex flex-column justify-content-between"
                         >
-                            <h2 class="card-title">{{ purls.url_index }}</h2>
-                            <h4>
+                            <h4 class="card-title">{{ purls.url_index }}</h4>
+                            <h6 class="card-subtitle mb-2 text-muted">
                                 Created: {{ purls.created|date:"F d, Y H:i:s" }}
-                            </h4>
-                            <h4 href="#" class="card-text">
+                            </h6>
+                            <p class="card-text">
                                 <span class="text-success">Short Link - </span
                                 >{{ request.get_host }}/{{ purls.short_url }}
-                            </h4>
-                            <div class="d-flex align-items-center">
-                                <h4>
+                            </p>
+                            <div class="d-flex align-items-center mt-auto">
+                                <h6>
                                     Times Clicked: {{ purls.times_followed }}
-                                </h4>
+                                </h6>
                                 <button
                                     class="btn btn-primary btn-sm ms-auto copy-btn"
                                     onclick="copyToClipboard('{{ request.get_host }}/{{ purls.short_url }}')"
@@ -137,8 +138,8 @@
                                     <i class="fas fa-trash-alt"></i>
                                 </a>
                             </div>
-                            <br>
-                            <p>
+                            <br />
+                            <p class="card-text">
                                 <span class="text-danger">Previous URL:</span>
                                 {{ purls.long_url }}
                             </p>
@@ -170,6 +171,11 @@
     }
 </script>
 <style>
+    .custom-card {
+        border: 1px solid rgba(0, 0, 0, 0.2);
+        background-color: #f8f9fa;
+    }    
+
     body {
         font-family: Arial, sans-serif;
     }
