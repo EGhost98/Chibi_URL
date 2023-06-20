@@ -1,89 +1,242 @@
-{% extends 'tinyurl/base.html' %} {% block body %}
+{% extends 'tinyurl/base.html' %}
+
+{% block body %}
 <link
     rel="stylesheet"
     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
 />
-<div class="container">
-    <div class="card mt-5">
-        <div class="card-header text-center py-3">
-            <h1>URL Shortener <i class="fas fa-link px-2"></i></h1>
+<link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+    integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM"
+    crossorigin="anonymous"
+/>
+<div class="container mt-5 mb-5">
+    <div class="card mt-5 mb-5">
+        <div class="card-header text-center py-3 bg-dark text-white">
+            <h1 class="fadeInUp">URL Shortener <i class="fas fa-link px-2"></i></h1>
         </div>
         <div class="px-3 py-4">
-            <form action="" method="POST">
+            <form action="" method="POST" class="form-inline justify-content-center mb-3 fadeIn">
                 {% csrf_token %}
                 <div class="row g-3">
                     <div class="col-md-10">
                         {{ form.long_url }}
                     </div>
                     <div class="col-md-2">
-                        <button class="btn btn-success btn-lg w-100" type="submit">Shorten</button>
+                        <button class="btn btn-success w-100" type="submit">Shorten</button>
                     </div>
                     <div class="col-md-4">
                         {{ form.url_index }}
                     </div>
-                    {% comment %} <div class="col-md-4">
-                        {{ form.short_url }}
-                    </div> {% endcomment %}
                 </div>
             </form>
         </div>
     </div>
-</div>
     {% if errors %}
     <div class="alert alert-danger mt-4" role="alert">
-        <p>{{errors}}</p>
+        <p>{{ errors }}</p>
     </div>
-    {% endif %} {% if new_url %}
-    <div class="mx-auto text-center mt-5">
-        <h2 class="text-danger">Your shortened URL</h2>
-        <p>You can copy the link below and share it with your friends</p>
-        <a>{{new_url}}</a>
-        <br />
-        <div class="d-flex justify-content-center align-items-center">
-            <a href="{{ new_url }}" class="btn btn-primary me-2">
-                <i class="fas fa-external-link-alt"></i> Visit URL
-            </a>
-            <button
-                class="btn btn-primary"
-                onclick="copyToClipboard('{{ new_url }}')"
-            >
-                <i class="fas fa-copy"></i> Copy
-            </button>
-        </div>
-        <br />
-        <p><span class="text-danger">Previous URL:</span> {{ long_url }}</p>
-    </div>
+    {% endif %} 
 
+    {% if cur %}
+    <div class="container mt-5 fadeIn">
+        <div class="row justify-content-center">
+            <div class="col-md-8 mb-5">
+                <div class="card h-100">
+                    <div class="card-body d-flex flex-column justify-content-between">
+                        <h2 class="card-title">{{ cur.url_index }}</h2>
+                        <div class="d-flex align-items-center">
+                            <h5 href="#" class="card-text"><span class="text-success">Short Link - </span>{{ request.get_host }}/{{ cur.short_url }}</h5>
+                            <button
+                                class="btn btn-secondary ms-5 btn-sm copy-btn"
+                                onclick="copyToClipboard('{{ request.get_host }}/{{ cur.short_url }}')"
+                                data-bs-toggle="tooltip"
+                                data-bs-placement="top"
+                                title="Copy to Clipboard"
+                            >
+                                <i class="fas fa-copy"></i>   Copy
+                            </button>
+                            <a
+                                href="{% url 'redirect_url' shortened_part=cur.short_url %}"
+                                class="btn btn-info ms-3 btn-sm"
+                                data-bs-toggle="tooltip"
+                                data-bs-placement="top"
+                                title="Visit URL"
+                            >
+                                <i class="fas fa-external-link-alt"></i>   Visit URL
+                            </a>
+                        </div>
+                        <br>
+                        <p><span class="text-danger">Previous URL:</span> {{ cur.long_url }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     {% endif %}
+</div>
+<div class="container mt-5 fadeIn">
+    <div class="card">
+        <div class="card-header text-center py-3 bg-dark text-white">
+            <h1 class="fadeInUp">Recent URLs <i class="fas fa-link px-2"></i></h1>
+        </div>
+        <div class="card-body">
+            <div class="row m-5">
+                {% for purls in last4 %}
+                <div class="col-md-6 mb-4">
+                    <div class="card h-100">
+                        <div class="card-body d-flex flex-column justify-content-between">
+                            <h2 class="card-title">{{ purls.url_index }}</h2>
+                            <h6 class="card-title">
+                                Created: {{ purls.created|date:"F d, Y H:i:s" }}
+                            </h6>
+                            <h6 class="card-title">
+                                Times Clicked: {{ purls.times_followed }}
+                            </h6>
+                            <div class="d-flex align-items-center">
+                                <h5 href="#" class="card-text"><span class="text-success">Short Link - </span>{{ request.get_host }}/{{ purls.short_url }}
+                                </h5>
+                                <button
+                                    class="btn btn-primary ms-5 btn-sm copy-btn"
+                                    onclick="copyToClipboard('{{ request.get_host }}/{{ purls.short_url }}')"
+                                    data-bs-toggle="tooltip"
+                                    data-bs-placement="top"
+                                    title="Copy to Clipboard"
+                                >
+                                    <i class="fas fa-copy"></i>
+                                </button>
+                                <a
+                                    href="{% url 'redirect_url' shortened_part=purls.short_url %}"
+                                    class="btn btn-warning ms-3 btn-sm"
+                                    data-bs-toggle="tooltip"
+                                    data-bs-placement="top"
+                                    title="Visit URL"
+                                >
+                                    <i class="fas fa-external-link-alt"></i>
+                                </a>
+                                <a
+                                    href="{% url 'delete_url' purls.id %}"
+                                    class="btn btn-danger ms-3 btn-sm"
+                                    data-bs-toggle="tooltip"
+                                    data-bs-placement="top"
+                                    title="Delete"
+                                >
+                                    <i class="fas fa-trash-alt"></i>
+                                </a>
+                            </div>
+                            <br>
+                            <p><span class="text-danger">Previous URL:</span> {{ purls.long_url }}</p>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
 </div>
 
 <script>
-    function showNotification(message) {
-        var notification = document.createElement("div");
-        notification.className = "notification success";
-        notification.innerHTML =
-            '<span class="notification-icon">&#10004;</span>' + message;
-        document.body.appendChild(notification);
-
-        setTimeout(function () {
-            notification.style.display = "none";
-            document.body.removeChild(notification);
-        }, 3000); // Display the notification for 3 seconds
-    }
-
     function copyToClipboard(text) {
-        var dummy = document.createElement("textarea");
-        document.body.appendChild(dummy);
-        dummy.value = text;
-        dummy.select();
-        document.execCommand("copy");
-        document.body.removeChild(dummy);
+        const el = document.createElement('textarea');
+        el.value = text;
+        el.setAttribute('readonly', '');
+        el.style.position = 'absolute';
+        el.style.left = '-9999px';
+        document.body.appendChild(el);
+        el.select();
+        document.execCommand('copy');
+        document.body.removeChild(el);
 
-        showNotification("Copied to clipboard!");
+        const notification = document.createElement('div');
+        notification.classList.add('notification', 'success');
+        notification.innerHTML = `<span class="notification-icon"><i class="fas fa-check"></i></span>URL copied to clipboard!`;
+        document.body.appendChild(notification);
     }
 </script>
-
 <style>
+    body {
+        font-family: Arial, sans-serif;
+    }
+
+    .card {
+        background-color: #f8f9fa;
+        border: none;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .card-header {
+        background-color: #fff;
+        border-bottom: 1px solid #dee2e6;
+    }
+
+    .card-title {
+        font-size: 24px;
+        font-weight: bold;
+    }
+
+    .card-body {
+        padding: 20px;
+    }
+
+    .form-control {
+        border-radius: 4px;
+        padding: 10px;
+    }
+
+    .btn-success {
+        background-color: #28a745;
+        border: none;
+        border-radius: 4px;
+        padding: 10px 20px;
+        font-weight: bold;
+        transition: background-color 0.3s;
+    }
+
+    .btn-success:hover {
+        background-color: #218838;
+    }
+
+    .btn-primary {
+        background-color: #007bff;
+        border: none;
+        border-radius: 4px;
+        padding: 10px 20px;
+        font-weight: bold;
+        transition: background-color 0.3s;
+    }
+
+    .btn-primary:hover {
+        background-color: #0069d9;
+    }
+
+    .btn-warning {
+        background-color: #ffc107;
+        border: none;
+        border-radius: 4px;
+        padding: 10px 20px;
+        font-weight: bold;
+        transition: background-color 0.3s;
+    }
+
+    .btn-warning:hover {
+        background-color: #e0a800;
+    }
+
+    .btn-danger {
+        background-color: #dc3545;
+        border: none;
+        border-radius: 4px;
+        padding: 10px 20px;
+        font-weight: bold;
+        transition: background-color 0.3s;
+    }
+
+    .btn-danger:hover {
+        background-color: #c82333;
+    }
+
     .notification {
         position: fixed;
         top: 60px;
@@ -93,20 +246,13 @@
         color: #000;
         display: flex;
         align-items: center;
+        border-radius: 4px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        animation: fadeOut 3s ease-in;
     }
 
     .notification.success {
         background-color: #b4e8b4;
-    }
-
-    .notification:before {
-        content: "";
-        position: absolute;
-        top: 0;
-        left: 0;
-        height: 100%;
-        width: 5px;
-        background-color: #327932;
     }
 
     .notification-icon {
@@ -121,6 +267,15 @@
         color: #4caf50;
         font-weight: bold;
     }
-</style>
 
-{% endblock body %}
+    @keyframes fadeOut {
+        0% {
+            opacity: 1;
+        }
+        100% {
+            opacity: 0;
+            display: none;
+        }
+    }
+</style>
+{% endblock %}

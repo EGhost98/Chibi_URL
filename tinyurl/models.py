@@ -2,22 +2,14 @@ from django.db import models
 from .utils import create_shortened_url
 from django.contrib.auth.models import User
 from django.urls import reverse
-# At the end of the  Shortener model
 
 class Shortener(models.Model):
-    '''
-    Creates a short url based on the long one
-    created -> Hour and date a shortener was created 
-    times_followed -> Times the shortened link has been followed
-    long_url -> The original link
-    short_url ->  shortened link https://domain/(short_url)
-    '''
-    user_name = models.ForeignKey(User, on_delete=models.CASCADE,default=9)
-    created = models.DateTimeField(auto_now_add=True)
+    user_name = models.ForeignKey(User, on_delete=models.CASCADE,default=1) # user cuurrently logged in to associate url
+    created = models.DateTimeField(auto_now_add=True) # Hour and date a shortener was created 
     times_followed = models.PositiveIntegerField(default=0)
-    long_url = models.URLField()
-    short_url = models.CharField(max_length=15, unique=True, blank=True)
-    url_index = models.CharField(max_length=100, blank=True)
+    long_url = models.URLField() #The original link
+    short_url = models.CharField(max_length=15, unique=True, blank=True) # shortened link https://domain/(short_url)
+    url_index = models.CharField(max_length=100, blank=True) # index a url by giving it a custom name
 
     class Meta:
         ordering = ["-created"]
@@ -26,10 +18,6 @@ class Shortener(models.Model):
         return f'{self.long_url} to {self.short_url}'
     
     def save(self, *args, **kwargs):
-        # If the short url wasn't specified
-        if not self.short_url:
+        if not self.short_url:  # If the short url wasn't specified
             self.short_url = create_shortened_url(self) # We pass the model instance that is being saved
         super().save(*args, **kwargs)
-    
-    # def get_absolute_url(self):
-    #     return reverse("index", kwargs={"pk": self.pk})

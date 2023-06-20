@@ -1,36 +1,26 @@
 {% extends 'tinyurl/base.html' %} {% block body %}
-<link
-    rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
-/>
 <div class="container mt-5">
     <div class="card">
-        <div class="card-header text-center py-3">
-            <h1>URL Shortener <i class="fas fa-link px-2"></i></h1>
+        <div class="card-header text-center py-3 bg-dark text-white">
+            <h1 class="fadeInUp">URL Shortener <i class="fas fa-link px-2"></i></h1>
         </div>
         <div class="card-body">
             <form method="GET" class="mb-3" id="search-form">
                 <div class="input-group">
                     {{ search_form.query }}
-                    <button
-                        class="btn btn-success"
-                        type="submit"
-                        form="search-form"
-                    >
-                        Search
+                    <button class="btn btn-success" type="submit" form="search-form">
+                        <i class="fas fa-search"></i> Search
                     </button>
-                    <a class="btn btn-danger ms-2" href="{% url 'myurls' %}"
-                        >Reset</a
-                    >
+                    <a class="btn btn-danger ms-2" href="{% url 'myurls' %}">
+                        Reset
+                    </a>
                 </div>
             </form>
             <div class="row m-5">
                 {% for purls in myurls %}
                 <div class="col-md-6 mb-4">
-                    <div class="card h-100">
-                        <div
-                            class="card-body d-flex flex-column justify-content-between"
-                        >
+                    <div class="card h-100 bg-dark text-white">
+                        <div class="card-body d-flex flex-column justify-content-between">
                             <h2 class="card-title">{{ purls.url_index }}</h2>
                             <h6 class="card-title">
                                 Created: {{ purls.created|date:"F d, Y H:i:s" }}
@@ -39,21 +29,19 @@
                                 Times Clicked: {{ purls.times_followed }}
                             </h6>
                             <div class="d-flex align-items-center">
-                                <h5 href="#" class="card-text">
-                                    Short Link: {{ request.get_host }}/{{purls.short_url }}
+                                <h5 href="#" class="card-text"><span class="text-success">Short Link - </span>{{ request.get_host }}/{{ purls.short_url }}
                                 </h5>
                                 <button
-                                    class="btn btn-primary ms-3 btn-sm copy-btn"
-                                    onclick="copyToClipboard('{{ request.get_host }}/{{ purls.short_url }}')"
-                                    data-bs-toggle="tooltip"
-                                    data-bs-placement="top"
-                                    title="Copy to Clipboard"
-                                >
-                                    <i class="fas fa-copy"></i>
+                                class="btn btn-primary ms-5 btn-sm copy-btn"
+                                onclick="copyToClipboard('{{ request.get_host }}/{{ purls.short_url }}')"
+                                data-bs-toggle="tooltip"
+                                data-bs-placement="top"
+                                title="Copy to Clipboard">
+                                <i class="fas fa-copy"></i>
                                 </button>
                                 <a
                                     href="{% url 'redirect_url' shortened_part=purls.short_url %}"
-                                    class="btn btn-primary ms-3 btn-sm"
+                                    class="btn btn-warning ms-3 btn-sm"
                                     data-bs-toggle="tooltip"
                                     data-bs-placement="top"
                                     title="Visit URL"
@@ -70,9 +58,8 @@
                                     <i class="fas fa-trash-alt"></i>
                                 </a>
                             </div>
-                            <p class="card-text">
-                                Original URL: {{ purls.long_url }}
-                            </p>
+                            <br>
+                            <p><span class="text-danger">Previous URL:</span> {{ purls.long_url }}</p>
                         </div>
                     </div>
                 </div>
@@ -148,6 +135,88 @@
     }
 </script>
 <style>
+    body {
+        font-family: Arial, sans-serif;
+    }
+
+    .card {
+        background-color: #f8f9fa;
+        border: none;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .card-header {
+        background-color: #fff;
+        border-bottom: 1px solid #dee2e6;
+    }
+
+    .card-title {
+        font-size: 24px;
+        font-weight: bold;
+    }
+
+    .card-body {
+        padding: 20px;
+    }
+
+    .form-control {
+        border-radius: 4px;
+        padding: 10px;
+    }
+
+    .btn-success {
+        background-color: #28a745;
+        border: none;
+        border-radius: 4px;
+        padding: 10px 20px;
+        font-weight: bold;
+        transition: background-color 0.3s;
+    }
+
+    .btn-success:hover {
+        background-color: #218838;
+    }
+
+    .btn-primary {
+        background-color: #007bff;
+        border: none;
+        border-radius: 4px;
+        padding: 10px 20px;
+        font-weight: bold;
+        transition: background-color 0.3s;
+    }
+
+    .btn-primary:hover {
+        background-color: #0069d9;
+    }
+
+    .btn-warning {
+        background-color: #ffc107;
+        border: none;
+        border-radius: 4px;
+        padding: 10px 20px;
+        font-weight: bold;
+        transition: background-color 0.3s;
+    }
+
+    .btn-warning:hover {
+        background-color: #e0a800;
+    }
+
+    .btn-danger {
+        background-color: #dc3545;
+        border: none;
+        border-radius: 4px;
+        padding: 10px 20px;
+        font-weight: bold;
+        transition: background-color 0.3s;
+    }
+
+    .btn-danger:hover {
+        background-color: #c82333;
+    }
+
     .notification {
         position: fixed;
         top: 60px;
@@ -157,21 +226,13 @@
         color: #000;
         display: flex;
         align-items: center;
-        animation: fade-in 0.3s ease-in-out;
+        border-radius: 4px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        animation: fadeOut 3s ease-in;
     }
 
     .notification.success {
         background-color: #b4e8b4;
-    }
-
-    .notification:before {
-        content: "";
-        position: absolute;
-        top: 0;
-        left: 0;
-        height: 100%;
-        width: 5px;
-        background-color: #327932;
     }
 
     .notification-icon {
@@ -187,15 +248,15 @@
         font-weight: bold;
     }
 
-    @keyframes fade-in {
+    @keyframes fadeOut {
         0% {
-            opacity: 0;
-            transform: translateY(20px);
+            opacity: 1;
         }
         100% {
-            opacity: 1;
-            transform: translateY(0);
+            opacity: 0;
+            display: none;
         }
     }
 </style>
+
 {% endblock body %}
