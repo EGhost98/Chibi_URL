@@ -77,20 +77,18 @@
                                 <span class="text-success">Short URL - </span>{{ request.get_host }}/{{ purls.short_url }}
                             </p>
                             <div class="d-flex align-items-center">
-                                <h6 class="me-auto">
+                                <h6>
                                     Times Clicked: {{ purls.times_followed }}
                                 </h6>
-                                <div class="ms-auto">
-                                    <button class="btn btn-primary btn-sm" onclick="copyToClipboard('{{ request.get_host }}/{{ purls.short_url }}')" data-bs-toggle="tooltip" data-bs-placement="top" title="Copy to Clipboard">
-                                        <i class="fas fa-copy"></i>
-                                    </button>
-                                    <a href="{% url 'redirect_url' shortened_part=purls.short_url %}" class="btn btn-warning btn-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="Visit URL">
-                                        <i class="fas fa-external-link-alt"></i>
-                                    </a>
-                                    <a href="{% url 'delete_url' purls.id %}" class="btn btn-danger btn-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete">
-                                        <i class="fas fa-trash-alt"></i>
-                                    </a>
-                                </div>
+                                <button class="btn btn-primary btn-sm ms-auto copy-btn" onclick="copyToClipboard('{{ request.get_host }}/{{ purls.short_url }}')" data-bs-toggle="tooltip" data-bs-placement="top" title="Copy to Clipboard">
+                                    <i class="fas fa-copy"></i>
+                                </button>
+                                <a href="{% url 'redirect_url' shortened_part=purls.short_url %}" class="btn btn-warning ms-3 btn-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="Visit URL">
+                                    <i class="fas fa-external-link-alt"></i>
+                                </a>
+                                <a href="{% url 'delete_url' purls.id %}" class="btn btn-danger ms-3 btn-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete">
+                                    <i class="fas fa-trash-alt"></i>
+                                </a>
                             </div>
                             <br>
                             <div class="mt-auto">
@@ -111,7 +109,6 @@
         </div>        
     </div>
 </div>
-
 
 <script>
     function copyToClipboard(text) {
