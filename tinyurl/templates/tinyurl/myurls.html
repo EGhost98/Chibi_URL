@@ -16,103 +16,86 @@
                     </a>
                 </div>
             </form>
-            <div class="row m-5">
+            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 m-5">
                 {% for purls in myurls %}
-                <div class="col-md-6 col-lg-4 mb-4">
+                <div class="col col-12">
                     <div class="card h-100 custom-card">
-                        <div
-                            class="card-body d-flex flex-column justify-content-between"
-                        >
+                        <div class="card-body d-flex flex-column">
                             <h4 class="card-title">{{ purls.url_index }}</h4>
-                            <h6 class="card-subtitle mb-2 text-muted">
-                                Created: {{ purls.created|date:"F d, Y H:i:s" }}
-                            </h6>
+                            <h6 class="card-subtitle mb-2 text-muted">Created: {{ purls.created|date:"F d, Y H:i:s" }}</h6>
                             <p class="card-text">
-                                <span class="text-success">Short Link - </span
-                                >{{ request.get_host }}/{{ purls.short_url }}
+                                <span class="text-success">Short URL - </span>{{ request.get_host }}/{{ purls.short_url }}
                             </p>
-                            <div class="d-flex align-items-center mt-auto">
+                            <div class="d-flex align-items-center">
                                 <h6>
                                     Times Clicked: {{ purls.times_followed }}
                                 </h6>
-                                <button
-                                    class="btn btn-primary btn-sm ms-auto copy-btn"
-                                    onclick="copyToClipboard('{{ request.get_host }}/{{ purls.short_url }}')"
-                                    data-bs-toggle="tooltip"
-                                    data-bs-placement="top"
-                                    title="Copy to Clipboard"
-                                >
+                                <button class="btn btn-primary btn-sm ms-auto copy-btn" onclick="copyToClipboard('{{ request.get_host }}/{{ purls.short_url }}')" data-bs-toggle="tooltip" data-bs-placement="top" title="Copy to Clipboard">
                                     <i class="fas fa-copy"></i>
                                 </button>
-                                <a
-                                    href="{% url 'redirect_url' shortened_part=purls.short_url %}"
-                                    class="btn btn-warning ms-3 btn-sm"
-                                    data-bs-toggle="tooltip"
-                                    data-bs-placement="top"
-                                    title="Visit URL"
-                                >
+                                <a href="{% url 'redirect_url' shortened_part=purls.short_url %}" class="btn btn-warning ms-3 btn-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="Visit URL">
                                     <i class="fas fa-external-link-alt"></i>
                                 </a>
-                                <a
-                                    href="{% url 'delete_url' purls.id %}"
-                                    class="btn btn-danger ms-3 btn-sm"
-                                    data-bs-toggle="tooltip"
-                                    data-bs-placement="top"
-                                    title="Delete"
-                                >
+                                <a href="{% url 'delete_url' purls.id %}" class="btn btn-danger ms-3 btn-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete">
                                     <i class="fas fa-trash-alt"></i>
                                 </a>
                             </div>
-                            <br />
-                            <p class="card-text">
-                                <span class="text-danger">Previous URL:</span>
-                                {{ purls.long_url }}
-                            </p>
+                            <br>
+                            <div class="mt-auto">
+                                <button class="btn btn-primary btn-sm mt-auto mb-3" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ purls.id }}" aria-expanded="false" aria-controls="collapse{{ purls.id }}">
+                                    Original URL
+                                </button>                            
+                                <div class="collapse" id="collapse{{ purls.id }}">
+                                    <p class="card-text">
+                                        <span class="text-danger">{{ purls.long_url }}</span>
+                                    </p>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
                 {% endfor %}
-                <div class="pagination text-center mt-4 d-flex justify-content-center">
-                    <ul class="pagination justify-content-center">
-                        {% if myurls.has_previous %}
-                            <li class="page-item">
-                                <a class="page-link" href="?page=1" aria-label="First">
-                                    <span aria-hidden="true">&laquo;&laquo;</span>
-                                </a>
+            </div>
+            <div class="pagination text-center mt-4 d-flex justify-content-center">
+                <ul class="pagination justify-content-center">
+                    {% if myurls.has_previous %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page=1" aria-label="First">
+                                <span aria-hidden="true">&laquo;&laquo;</span>
+                            </a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ myurls.previous_page_number }}" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+                    {% endif %}
+                    
+                    {% for i in myurls.paginator.page_range %}
+                        {% if myurls.number == i %}
+                            <li class="page-item active">
+                                <a class="page-link" href="?page={{ i }}">{{ i }}</a>
                             </li>
+                        {% elif i > myurls.number|add:"-3" and i < myurls.number|add:"3" %}
                             <li class="page-item">
-                                <a class="page-link" href="?page={{ myurls.previous_page_number }}" aria-label="Previous">
-                                    <span aria-hidden="true">&laquo;</span>
-                                </a>
-                            </li>
-                        {% endif %}
-                        
-                        {% for i in myurls.paginator.page_range %}
-                            {% if myurls.number == i %}
-                                <li class="page-item active">
-                                    <a class="page-link" href="?page={{ i }}">{{ i }}</a>
-                                </li>
-                            {% elif i > myurls.number|add:"-3" and i < myurls.number|add:"3" %}
-                                <li class="page-item">
-                                    <a class="page-link" href="?page={{ i }}">{{ i }}</a>
-                                </li>
-                            {% endif %}
-                        {% endfor %}
-                        
-                        {% if myurls.has_next %}
-                            <li class="page-item">
-                                <a class="page-link" href="?page={{ myurls.next_page_number }}" aria-label="Next">
-                                    <span aria-hidden="true">&raquo;</span>
-                                </a>
-                            </li>
-                            <li class="page-item">
-                                <a class="page-link" href="?page={{ myurls.paginator.num_pages }}" aria-label="Last">
-                                    <span aria-hidden="true">&raquo;&raquo;</span>
-                                </a>
+                                <a class="page-link" href="?page={{ i }}">{{ i }}</a>
                             </li>
                         {% endif %}
-                    </ul>
-                </div>
+                    {% endfor %}
+                    
+                    {% if myurls.has_next %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ myurls.next_page_number }}" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ myurls.paginator.num_pages }}" aria-label="Last">
+                                <span aria-hidden="true">&raquo;&raquo;</span>
+                            </a>
+                        </li>
+                    {% endif %}
+                </ul>
             </div>
         </div>
     </div>
