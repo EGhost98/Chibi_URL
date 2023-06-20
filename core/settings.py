@@ -23,7 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-(i53(39ls&gmdzxbufq9gyk+pq+eh)9%j86m-r*ufs+=ft_d6k'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['testchibiurl.azurewebsites.net','*']
 
