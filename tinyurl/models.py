@@ -1,7 +1,6 @@
 from django.db import models
 from .utils import create_shortened_url
 from django.contrib.auth.models import User
-from django.urls import reverse
 
 class Shortener(models.Model):
     user_name = models.ForeignKey(User, on_delete=models.CASCADE,default=1) # user cuurrently logged in to associate url
