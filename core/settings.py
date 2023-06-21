@@ -128,4 +128,3 @@ LOGOUT_REDIRECT_URL = '/'
 CSRF_COOKIE_HTTPONLY = True
 CSRF_COOKIE_SECURE = True
 CSRF_TRUSTED_ORIGINS = ['https://testchibiurl.azurewebsites.net']
-
