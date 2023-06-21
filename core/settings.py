@@ -128,4 +128,4 @@ LOGOUT_REDIRECT_URL = '/'
 # CSRF settings
 CSRF_COOKIE_HTTPONLY = False
 CSRF_COOKIE_SECURE = True
-CSRF_TRUSTED_ORIGINS = ['https://testchibiurl.azurewebsites.net',]
+CSRF_TRUSTED_ORIGINS = ['http://testchibiurl.azurewebsites.net',]
