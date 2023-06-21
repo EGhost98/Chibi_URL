@@ -80,16 +80,16 @@
                                 <h6>
                                     Times Clicked: {{ purls.times_followed }}
                                 </h6>
-                                <button class="btn btn-primary btn-sm ms-auto copy-btn" onclick="copyToClipboard('{{ request.get_host }}/{{ purls.short_url }}')" data-bs-toggle="tooltip" data-bs-placement="top" title="Copy to Clipboard">
+                                <button class="btn btn-primary btn-sm ms-auto copy-btn small-btn" onclick="copyToClipboard('{{ request.get_host }}/{{ purls.short_url }}')" data-bs-toggle="tooltip" data-bs-placement="top" title="Copy to Clipboard">
                                     <i class="fas fa-copy"></i>
                                 </button>
-                                <a href="{% url 'redirect_url' shortened_part=purls.short_url %}" class="btn btn-warning ms-3 btn-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="Visit URL">
+                                <a href="{% url 'redirect_url' shortened_part=purls.short_url %}" class="btn btn-warning ms-2 btn-sm small-btn" data-bs-toggle="tooltip" data-bs-placement="top" title="Visit URL">
                                     <i class="fas fa-external-link-alt"></i>
                                 </a>
-                                <a href="{% url 'delete_url' purls.id %}" class="btn btn-danger ms-3 btn-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete">
+                                <a href="{% url 'delete_url' purls.id %}" class="btn btn-danger ms-2 btn-sm small-btn" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete">
                                     <i class="fas fa-trash-alt"></i>
                                 </a>
-                            </div>
+                            </div
                             <br>
                             <div class="mt-auto">
                                 <button class="btn btn-primary btn-sm mt-auto mb-3" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ purls.id }}" aria-expanded="false" aria-controls="collapse{{ purls.id }}">
@@ -128,6 +128,10 @@
     }
 </script>
 <style>
+    .small-btn {
+        padding: 0.2rem 0.4rem; /* Adjust the padding as needed */
+        font-size: 0.7rem; /* Adjust the font size as needed */
+    }
     .custom-card {
         border: 1px solid rgba(0, 0, 0, 0.2);
         background-color: rgba(248, 249, 250, 0.5); /* Updated: Background color with 50% opacity */
