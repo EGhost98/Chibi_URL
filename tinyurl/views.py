@@ -7,19 +7,21 @@ from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 from django.views.decorators.csrf import csrf_protect
+from django.views.decorators.cache import cache_page
 
 # @method_decorator(login_required, name='dispatch')
+# @method_decorator(cache_page(60 * 1440), name='dispatch')
 class index(View):
     template_name = 'tinyurl/home.html'
     form_class = ShortenerForm
-
+    
     def get(self, request):
         context = {'form': self.form_class()}
         if request.user.is_authenticated:
             last_entries = Shortener.objects.filter(user_name=request.user).order_by('-created')[:3]
             context['last4'] = last_entries
         return render(request, self.template_name, context)
-
+    
     def post(self, request):
         form = self.form_class(request.POST)
         context = {'form': form}
@@ -46,6 +48,7 @@ def redirect_url(request, shortened_part):
     except Shortener.DoesNotExist:
         return render(request, 'tinyurl/404.html', status=404) # Custom 404 Errors
 
+# @cache_page(60 * 1440)
 def myurls(request):
     template = 'tinyurl/myurls.html'
     context = {}

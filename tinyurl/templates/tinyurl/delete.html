@@ -1,4 +1,4 @@
-{% extends 'tinyurl/base.html' %}
+{% extends "tinyurl/base.html" %}
 
 {% block body %}
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
@@ -14,23 +14,25 @@
                     <h6 class="card-title">Times Clicked: {{ itm.times_followed }}</h6>
                     <p class="card-text lemon-green">Original URL: {{ itm.long_url }}</p>
                 </div>
+                <div class="card-footer">
+                    <div class="d-flex justify-content-between">
+                        <form method="POST">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-danger"><i class="fas fa-trash-alt"></i> Confirm</button>
+                        </form>
+                        <a href="javascript:history.back()" class="btn btn-primary">
+                            <i class="fas fa-arrow-left"></i> Go Back
+                        </a>
+                    </div>
+                </div>
             </div>
-        </div>
-    </div>
-    <div class="row justify-content-center">
-        <div class="col-md-6">
-            <h2>Are you sure you want to delete this URL?</h2>
-            <form method="POST">
-                {% csrf_token %}
-                <button type="submit" class="btn btn-danger"><i class="fas fa-trash-alt"></i> Confirm</button>
-            </form>
         </div>
     </div>
 </div>
 
 <style>
     .lemon-green {
-        color: maroon; /* Updated color to maroon */
+        color: maroon;
     }
 </style>
 {% endblock body %}
