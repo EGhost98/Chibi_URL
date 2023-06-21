@@ -6,9 +6,6 @@ from django.views import View
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
-from django.views.decorators.csrf import csrf_protect
-from django.views.decorators.cache import cache_page
-from django.core.exceptions import ObjectDoesNotExist
 
 # class DesktopModeView(View):
 #     def dispatch(self, request, *args, **kwargs):
@@ -23,7 +20,6 @@ from django.core.exceptions import ObjectDoesNotExist
 class index(View):
     template_name = 'tinyurl/home.html'
     form_class = ShortenerForm
-    
     def get(self, request):
         context = {'form': self.form_class()}
         if request.user.is_authenticated:
@@ -97,3 +93,6 @@ def delete_item(request, id):
         return render(request,'tinyurl/403.html',status=403)  # Return 403 Forbidden response
     context = {'itm': itm}
     return render(request, 'tinyurl/delete.html', context)
+
+def handler404(request, exception):
+    return render(request, 'tinyurl/404.html', status=404)

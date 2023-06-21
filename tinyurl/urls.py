@@ -9,3 +9,5 @@ urlpatterns = [
     path('a/my-urls',views.myurls, name='myurls'),
     path('delete/<int:id>',views.delete_item, name='delete_url'),
 ]
+
+handler404 = views.handler404

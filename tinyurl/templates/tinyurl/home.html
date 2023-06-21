@@ -10,6 +10,12 @@
     crossorigin="anonymous"
 />
 <div class="container mt-5 mb-5">
+    {% if user.is_authenticated %}
+    <div class="alert alert-success bg-success text-light" style="opacity: 0.8;">
+        <p class="mb-0">Welcome, {{ user.username }}!</p>
+    </div>
+{% endif %}
+
     <div class="card mt-5 mb-4">
         <div class="card-header text-center py-3 bg-dark text-white custom-header">
             <h1 class="fadeInUp custom-title">Chibi URL <i class="fas fa-link px-2"></i></h1>
@@ -75,6 +81,7 @@
     </div>    
     {% endif %}
 </div>
+{% if user.is_authenticated %}
 <div class="container mt-5 fadeIn">
     <div class="card">
         <div class="card-header text-center py-3 bg-dark text-white custom-header">
@@ -158,6 +165,7 @@
         </div>
     </div>
 </div>
+{% endif %}
 <script>
     function copyToClipboard(text) {
         const el = document.createElement("textarea");
