@@ -10,17 +10,17 @@ from django.views.decorators.csrf import csrf_protect
 from django.views.decorators.cache import cache_page
 
 
-class DesktopModeView(View):
-    def dispatch(self, request, *args, **kwargs):
-        user_agent = request.META.get('HTTP_USER_AGENT', '').lower()
-        if 'mobile' in user_agent or 'android' in user_agent or 'iphone' in user_agent:
-            # Redirect to the desktop version of your app
-            return redirect('desktop_home')
-        return super().dispatch(request, *args, **kwargs)
+# class DesktopModeView(View):
+#     def dispatch(self, request, *args, **kwargs):
+#         user_agent = request.META.get('HTTP_USER_AGENT', '').lower()
+#         if 'mobile' in user_agent or 'android' in user_agent or 'iphone' in user_agent:
+#             # Redirect to the desktop version of your app
+#             return redirect('desktop_home')
+#         return super().dispatch(request, *args, **kwargs)
 
 # @method_decorator(login_required, name='dispatch')
 # @method_decorator(cache_page(60 * 1440), name='dispatch')
-class index(DesktopModeView):
+class index(View):
     template_name = 'tinyurl/home.html'
     form_class = ShortenerForm
     
@@ -88,10 +88,11 @@ def delete_item(request, id):
         if request.user.is_superuser or request.user == itm.user_name:
             if request.method == 'POST':
                 itm.delete()
-                return redirect('myurls')
+                return redirect(request.META.get('HTTP_REFERER', 'myurls'))
         else:
-            return render(request,'tinyurl/403.html',status=403)  # Return 403 Forbidden response
+            return render(request, 'tinyurl/403.html', status=403)  # Return 403 Forbidden response
     else:
-        return render(request,'tinyurl/403.html',status=403)  # Return 403 Forbidden response
+        return render(request, 'tinyurl/403.html', status=403)  # Return 403 Forbidden response
+    
     context = {'itm': itm}
     return render(request, 'tinyurl/delete.html', context)
