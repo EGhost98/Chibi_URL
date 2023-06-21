@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, Http404, HttpResponseRedirect
-from django.views.decorators.csrf import csrf_protect
+from django.views.decorators.csrf import csrf_exempt
 from .models import Shortener
 from .forms import ShortenerForm, SearchForm
 from django.views import View
@@ -9,11 +9,14 @@ from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 
 # @method_decorator(login_required, name='dispatch')
-@method_decorator(csrf_protect, name='dispatch')
+# @method_decorator(csrf_protect, name='dispatch')
 class IndexView(View):
+    @method_decorator(csrf_exempt)
+    def dispatch(self, request, *args, **kwargs):
+        return super().dispatch(request, *args, **kwargs)
+    
     template_name = 'tinyurl/home.html'
     form_class = ShortenerForm
-
     def get(self, request):
         context = {'form': self.form_class()}
         if request.user.is_authenticated:
@@ -37,7 +40,7 @@ class IndexView(View):
             context['last4'] = last_entries
         return render(request, self.template_name, context)
 
-@csrf_protect
+@csrf_exempt
 def redirect_url(request, shortened_part):
     try:
         shortener = Shortener.objects.get(short_url=shortened_part)
@@ -47,7 +50,7 @@ def redirect_url(request, shortened_part):
     except Shortener.DoesNotExist:
         return render(request, 'tinyurl/404.html', status=404) # Custom 404 Errors
 
-@csrf_protect
+@csrf_exempt
 @login_required
 def myurls(request):
     template = 'tinyurl/myurls.html'
@@ -72,7 +75,7 @@ def myurls(request):
     context['myurls'] = urls_page
     return render(request, template, context)
 
-@csrf_protect
+@csrf_exempt
 @login_required
 def delete_item(request, id):
     itm = Shortener.objects.get(id=id)
@@ -85,6 +88,6 @@ def delete_item(request, id):
     context = {'itm': itm}
     return render(request, 'tinyurl/delete.html', context)
 
-@csrf_protect
+@csrf_exempt
 def handler404(request, exception):
     return render(request, 'tinyurl/404.html', status=404)
