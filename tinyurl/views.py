@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, Http404, HttpResponseRedirect
+from django.views.decorators.csrf import csrf_protect
 from .models import Shortener
 from .forms import ShortenerForm, SearchForm
 from django.views import View
@@ -7,19 +8,12 @@ from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 
-# class DesktopModeView(View):
-#     def dispatch(self, request, *args, **kwargs):
-#         user_agent = request.META.get('HTTP_USER_AGENT', '').lower()
-#         if 'mobile' in user_agent or 'android' in user_agent or 'iphone' in user_agent:
-#             # Redirect to the desktop version of your app
-#             return redirect('desktop_home')
-#         return super().dispatch(request, *args, **kwargs)
-
 # @method_decorator(login_required, name='dispatch')
-# @method_decorator(cache_page(60 * 1440), name='dispatch')
-class index(View):
+@method_decorator(csrf_protect, name='dispatch')
+class IndexView(View):
     template_name = 'tinyurl/home.html'
     form_class = ShortenerForm
+
     def get(self, request):
         context = {'form': self.form_class()}
         if request.user.is_authenticated:
@@ -43,7 +37,7 @@ class index(View):
             context['last4'] = last_entries
         return render(request, self.template_name, context)
 
-
+@csrf_protect
 def redirect_url(request, shortened_part):
     try:
         shortener = Shortener.objects.get(short_url=shortened_part)
@@ -53,10 +47,9 @@ def redirect_url(request, shortened_part):
     except Shortener.DoesNotExist:
         return render(request, 'tinyurl/404.html', status=404) # Custom 404 Errors
 
-# @cache_page(60 * 1440)
+@csrf_protect
+@login_required
 def myurls(request):
-    if not request.user.is_authenticated:
-        return redirect()
     template = 'tinyurl/myurls.html'
     context = {}
     # Process the search form
@@ -79,20 +72,19 @@ def myurls(request):
     context['myurls'] = urls_page
     return render(request, template, context)
 
-
+@csrf_protect
+@login_required
 def delete_item(request, id):
-    if request.user.is_authenticated:
-        itm = Shortener.objects.get(id=id)
+    itm = Shortener.objects.get(id=id)
+    if request.method == 'POST':
         if request.user.is_superuser or request.user == itm.user_name:
-            if request.method == 'POST':
-                itm.delete()
-                return redirect('myurls')
+            itm.delete()
+            return redirect('myurls')
         else:
             return render(request,'tinyurl/403.html',status=403)  # Return 403 Forbidden response
-    else:
-        return render(request,'tinyurl/403.html',status=403)  # Return 403 Forbidden response
     context = {'itm': itm}
     return render(request, 'tinyurl/delete.html', context)
 
+@csrf_protect
 def handler404(request, exception):
     return render(request, 'tinyurl/404.html', status=404)
