@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -18,6 +19,11 @@
             100% {
                 opacity: 1;
             }
+        }
+    </style>
+    <style>
+        body {
+            background-image: url("{% static 'background.jpg' %}");
         }
     </style>
 </head>

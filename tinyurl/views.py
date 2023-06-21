@@ -16,7 +16,7 @@ class index(View):
     def get(self, request):
         context = {'form': self.form_class()}
         if request.user.is_authenticated:
-            last_entries = Shortener.objects.filter(user_name=request.user).order_by('-created')[:4]
+            last_entries = Shortener.objects.filter(user_name=request.user).order_by('-created')[:3]
             context['last4'] = last_entries
         return render(request, self.template_name, context)
 
@@ -32,7 +32,7 @@ class index(View):
         else:
             context['errors'] = form.errors
         if request.user.is_authenticated:
-            last_entries = Shortener.objects.filter(user_name=request.user).order_by('-created')[1:5]
+            last_entries = Shortener.objects.filter(user_name=request.user).order_by('-created')[1:4]
             context['last4'] = last_entries
         return render(request, self.template_name, context)
 
