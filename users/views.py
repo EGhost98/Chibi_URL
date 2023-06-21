@@ -4,6 +4,26 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.views.decorators.csrf import csrf_exempt
+from django.contrib.auth.views import LoginView
+
+@csrf_exempt
+def clogin(request):
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        
+        user = authenticate(request, username=username, password=password)
+        
+        if user is not None:
+            login(request, user)
+            return redirect('index')  # Replace 'home' with the desired URL after login
+        else:
+            # Handle invalid login credentials
+            return render(request, 'users/login.html', {'show_welcome_notification': True, 'error_message': 'Invalid login credentials'})
+    else:
+        return render(request, 'users/login.html', {'show_welcome_notification': True})
+
+
 
 @csrf_exempt
 def register(request):
