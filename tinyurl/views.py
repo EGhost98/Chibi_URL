@@ -9,9 +9,18 @@ from django.core.paginator import Paginator
 from django.views.decorators.csrf import csrf_protect
 from django.views.decorators.cache import cache_page
 
+
+class DesktopModeView(View):
+    def dispatch(self, request, *args, **kwargs):
+        user_agent = request.META.get('HTTP_USER_AGENT', '').lower()
+        if 'mobile' in user_agent or 'android' in user_agent or 'iphone' in user_agent:
+            # Redirect to the desktop version of your app
+            return redirect('desktop_home')
+        return super().dispatch(request, *args, **kwargs)
+
 # @method_decorator(login_required, name='dispatch')
 # @method_decorator(cache_page(60 * 1440), name='dispatch')
-class index(View):
+class index(DesktopModeView):
     template_name = 'tinyurl/home.html'
     form_class = ShortenerForm
     

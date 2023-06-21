@@ -7,7 +7,7 @@ class ShortenerForm(forms.ModelForm):
     )
     url_index = forms.CharField(
         required=False,
-        widget=forms.TextInput(attrs={"class": "form-control form-control-lg", "placeholder": "Give an Index to your URL (Optional)"})
+        widget=forms.TextInput(attrs={"class": "form-control form-control-lg", "placeholder": "Index to URL (Optional)"})
     )
 
     class Meta:
