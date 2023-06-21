@@ -1,28 +1,31 @@
-{% extends 'tinyurl/base.html' %}
-{% block body %}
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous" />
+{% extends "tinyurl/base.html" %} {% block body %}
+<link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+/>
+<link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+    integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM"
+    crossorigin="anonymous"
+/>
 <div class="container mt-5 mb-5">
-    <div class="card mt-5 mb-5">
-        <div class="card-header text-center py-3 bg-dark text-white" style="opacity: 0.9;">
-            <h1 class="fadeInUp" style="font-family: 'Arial', sans-serif;">Chibi URL <i class="fas fa-link px-2"></i></h1>
-        </div>        
+    <div class="card mt-5 mb-4">
+        <div class="card-header text-center py-3 bg-dark text-white custom-header">
+            <h1 class="fadeInUp custom-title">Chibi URL <i class="fas fa-link px-2"></i></h1>
+        </div>
         <div class="px-3 py-4">
-            <form action="" method="POST" class="form-inline justify-content-center mb-3 fadeIn">
+            <form action="" method="post" class="form-inline justify-content-center mb-3 fadeIn">
                 {% csrf_token %}
                 <div class="row g-3">
-                    <div class="col-md-9">
-                        {{ form.long_url }}
-                    </div>
+                    <div class="col-md-9">{{ form.long_url }}</div>
                     <div class="col-md-3">
                         <button class="btn btn-success w-100" type="submit">Shorten</button>
                     </div>
-                    <div class="col-md-12">
-                        {{ form.url_index }}
-                    </div>
+                    <div class="col-md-4">{{ form.url_index }}</div>
                 </div>
             </form>
-        </div>
+        </div>        
     </div>
     {% if errors %}
     <div class="alert alert-danger mt-4" role="alert">
@@ -31,7 +34,7 @@
     {% endif %} {% if cur %}
     <div class="container mt-5 fadeIn">
         <div class="row justify-content-center">
-            <div class="col-md-8 mb-5">
+            <div class="col-md-8 col-lg-6 col-xl-4 mb-5">
                 <div class="card h-100">
                     <div class="card-body d-flex flex-column">
                         <h2 class="card-title">{{ cur.url_index }}</h2>
@@ -39,28 +42,40 @@
                             <h5 href="#" class="card-text">
                                 <span class="text-success">Short Link - </span>{{ request.get_host }}/{{ cur.short_url }}
                             </h5>
-                            <button class="btn btn-secondary ms-5 btn-sm copy-btn" onclick="copyToClipboard('{{ request.get_host }}/{{ cur.short_url }}')" data-bs-toggle="tooltip" data-bs-placement="top" title="Copy to Clipboard">
-                                <i class="fas fa-copy"></i> Copy
-                            </button>
-                            <a href="{% url 'redirect_url' shortened_part=cur.short_url %}" class="btn btn-info ms-3 btn-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="Visit URL">
-                                <i class="fas fa-external-link-alt"></i> Visit URL
-                            </a>
                         </div>
-                        <br />
-                        <div class="card-text">
-                            <span class="text-danger">Previous URL:</span>
-                            {{ cur.long_url }}
+                        <div class="mt-auto">
+                            <div class="d-flex align-items-center mt-3">
+                                <button class="btn btn-success btn-sm copy-btn me-2" onclick="copyToClipboard('{{ request.get_host }}/{{ cur.short_url }}')" data-bs-toggle="tooltip" data-bs-placement="top" title="Copy to Clipboard">
+                                    <i class="fas fa-copy"></i> Copy
+                                </button>
+                                <a href="{% url 'redirect_url' shortened_part=cur.short_url %}" class="btn btn-warning btn-sm me-2" data-bs-toggle="tooltip" data-bs-placement="top" title="Visit URL">
+                                    <i class="fas fa-external-link-alt"></i> Visit URL
+                                </a>
+                                <a href="{% url 'delete_url' cur.id %}" class="btn btn-danger btn-sm me-2" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete">
+                                    <i class="fas fa-trash-alt"></i> Delete
+                                </a>
+                            </div>
+                        </div>
+                        <div>
+                            <button class="btn btn-primary btn-sm mt-3" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ purls.id }}" aria-expanded="false" aria-controls="collapse{{ purls.id }}">
+                                Original URL
+                            </button>
+                            <div class="collapse" id="collapse{{ purls.id }}">
+                                <p class="card-text">
+                                    <span class="text-danger">{{ cur.long_url }}</span>
+                                </p>
+                            </div>
                         </div>
                     </div>
-                </div>
+                </div>                                               
             </div>
         </div>
-    </div>
+    </div>    
     {% endif %}
 </div>
 <div class="container mt-5 fadeIn">
     <div class="card">
-        <div class="card-header text-center py-3 bg-dark text-white" style="opacity: 0.9;">
+        <div class="card-header text-center py-3 bg-dark text-white custom-header">
             <h1 class="fadeInUp">
                 Recent URLs <i class="fas fa-link px-2"></i>
             </h1>
@@ -72,32 +87,64 @@
                     <div class="card h-100 custom-card">
                         <div class="card-body d-flex flex-column h-100">
                             <h4 class="card-title">{{ purls.url_index }}</h4>
-                            <h6 class="card-subtitle mb-2 text-muted">Created: {{ purls.created|date:"F d, Y H:i:s" }}</h6>
+                            <h6 class="card-subtitle mb-2 text-muted">
+                                Created: {{ purls.created|date:"F d, Y H:i:s" }}
+                            </h6>
                             <p class="card-text">
-                                <span class="text-success">Short URL - </span>{{ request.get_host }}/{{ purls.short_url }}
+                                <span class="text-success">Short URL - </span> {{ request.get_host }}/{{ purls.short_url }}
                             </p>
                             <div class="d-flex align-items-center">
                                 <h6>
                                     Times Clicked: {{ purls.times_followed }}
                                 </h6>
-                                <button class="btn btn-primary btn-sm ms-auto copy-btn small-btn" onclick="copyToClipboard('{{ request.get_host }}/{{ purls.short_url }}')" data-bs-toggle="tooltip" data-bs-placement="top" title="Copy to Clipboard">
+                                <button
+                                    class="btn btn-success btn-sm ms-auto copy-btn small-btn"
+                                    onclick="copyToClipboard('{{ request.get_host }}/{{ purls.short_url }}')"
+                                    data-bs-toggle="tooltip"
+                                    data-bs-placement="top"
+                                    title="Copy to Clipboard"
+                                >
                                     <i class="fas fa-copy"></i>
                                 </button>
-                                <a href="{% url 'redirect_url' shortened_part=purls.short_url %}" class="btn btn-warning ms-2 btn-sm small-btn" data-bs-toggle="tooltip" data-bs-placement="top" title="Visit URL">
+                                <a
+                                    href="{% url 'redirect_url' shortened_part=purls.short_url %}"
+                                    class="btn btn-warning ms-2 btn-sm small-btn"
+                                    data-bs-toggle="tooltip"
+                                    data-bs-placement="top"
+                                    title="Visit URL"
+                                >
                                     <i class="fas fa-external-link-alt"></i>
                                 </a>
-                                <a href="{% url 'delete_url' purls.id %}" class="btn btn-danger ms-2 btn-sm small-btn" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete">
+                                <a
+                                    href="{% url 'delete_url' purls.id %}"
+                                    class="btn btn-danger ms-2 btn-sm small-btn"
+                                    data-bs-toggle="tooltip"
+                                    data-bs-placement="top"
+                                    title="Delete"
+                                >
                                     <i class="fas fa-trash-alt"></i>
                                 </a>
-                            </div
-                            <br>
+                            </div>
+                            <br />
                             <div class="mt-auto">
-                                <button class="btn btn-primary btn-sm mt-auto mb-3" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ purls.id }}" aria-expanded="false" aria-controls="collapse{{ purls.id }}">
+                                <button
+                                    class="btn btn-primary btn-sm mt-auto mb-3"
+                                    type="button"
+                                    data-bs-toggle="collapse"
+                                    data-bs-target="#collapse{{ purls.id }}"
+                                    aria-expanded="false"
+                                    aria-controls="collapse{{ purls.id }}"
+                                >
                                     Original URL
-                                </button>                            
-                                <div class="collapse" id="collapse{{ purls.id }}">
+                                </button>
+                                <div
+                                    class="collapse"
+                                    id="collapse{{ purls.id }}"
+                                >
                                     <p class="card-text">
-                                        <span class="text-danger">{{ purls.long_url }}</span>
+                                        <span class="text-danger"
+                                            >{{ purls.long_url }}</span
+                                        >
                                     </p>
                                 </div>
                             </div>
@@ -106,7 +153,7 @@
                 </div>
                 {% endfor %}
             </div>
-        </div>        
+        </div>
     </div>
 </div>
 <script>
@@ -125,32 +172,65 @@
         notification.classList.add("notification", "success");
         notification.innerHTML = `<span class="notification-icon"><i class="fas fa-check"></i></span>URL copied to clipboard!`;
         document.body.appendChild(notification);
+
+        setTimeout(function () {
+            document.body.removeChild(notification);
+        }, 3000);
     }
 </script>
+
 <style>
+    .custom-header {
+        opacity: 0.9;
+    }
+
+    .custom-title {
+        font-family: 'Arial', sans-serif;
+    }
+
     .small-btn {
         padding: 0.2rem 0.4rem; /* Adjust the padding as needed */
         font-size: 0.7rem; /* Adjust the font size as needed */
     }
     .custom-card {
         border: 1px solid rgba(0, 0, 0, 0.2);
-        background-color: rgba(248, 249, 250, 0.5); /* Updated: Background color with 50% opacity */
+        background-color: rgba(
+            248,
+            249,
+            250,
+            0.5
+        ); /* Updated: Background color with 50% opacity */
     }
 
     body {
         font-family: Arial, sans-serif;
-        background-color: rgba(0, 0, 0, 0.5); /* Updated: Background color with 50% opacity */
+        background-color: rgba(
+            0,
+            0,
+            0,
+            0.5
+        ); /* Updated: Background color with 50% opacity */
     }
 
     .card {
-        background-color: rgba(248, 249, 250, 0.5); /* Updated: Background color with 50% opacity */
+        background-color: rgba(
+            248,
+            249,
+            250,
+            0.5
+        ); /* Updated: Background color with 50% opacity */
         border: none;
         border-radius: 8px;
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     }
 
     .card-header {
-        background-color: rgba(255, 255, 255, 0.5); /* Updated: Background color with 50% opacity */
+        background-color: rgba(
+            255,
+            255,
+            255,
+            0.5
+        ); /* Updated: Background color with 50% opacity */
         border-bottom: 1px solid rgba(222, 226, 230, 0.5); /* Updated: Border color with 50% opacity */
     }
 
@@ -260,4 +340,4 @@
         }
     }
 </style>
-{% endblock %}
+{% endblock body %}
