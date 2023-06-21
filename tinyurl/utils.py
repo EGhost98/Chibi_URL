@@ -3,7 +3,7 @@ from random import choice
 import string
 
 
-SIZE = getattr(settings, "MAXIMUM_URL_CHARS", 7)
+SIZE = getattr(settings, "MAXIMUM_URL_CHARS", 4)
 AVAILABLE_CHARS = string.digits + string.ascii_lowercase + string.ascii_uppercase
 
 

@@ -8,6 +8,15 @@
                 <div class="card shadow mt-5" style="background-color: rgba(255, 255, 255, 0.5);">
                     <div class="card-body">
                         <h1 class="mt-4 mb-3 text-center">Register</h1>
+                        {% if messages %}
+                        <div class="alert alert-warning" role="alert">
+                            <ul class="mb-0">
+                                {% for message in messages %}
+                                    <li>{{ message }}</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                        {% endif %}
                         <form method="post" action="{% url 'register' %}" class="needs-validation">
                             {% csrf_token %}
                             {% for field in form %}
@@ -22,14 +31,27 @@
                                     required
                                 />
                                 {% if field.errors %}
-                                {% for error in field.errors %}
                                 <div class="invalid-feedback">
-                                    {{ error|escape }}
+                                    <ul class="mb-0">
+                                        {% for error in field.errors %}
+                                            <li>{{ error|escape }}</li>
+                                        {% endfor %}
+                                    </ul>
                                 </div>
-                                {% endfor %}
                                 {% endif %}
+                                {% if field.error %}
+                            {% endif %}
                             </div>
                             {% endfor %}
+                            <div class="alert alert-primary">
+                                <ul class="mb-0">
+                                    <li>Your password can’t be too similar to your other personal information.</li>
+                                    <li>Your password must contain at least 8 characters.</li>
+                                    <li>Your password must contain at least 8 characters.</li>
+                                    <li>Your password can’t be a commonly used password.</li>
+                                    <li>Your password can’t be entirely numeric.</li>
+                                </ul>
+                            </div>
                             <button type="submit" class="btn btn-primary btn-block mt-3" style="background-color: rgba(34, 38, 42, 0.7); border-color: rgba(34, 38, 42, 0.7);">Register</button>
                         </form>
                     </div>

@@ -33,9 +33,13 @@
                                 />
                             </div>
                             {% if form.non_field_errors %}
-                                {% for error in form.non_field_errors %}
-                                    <p class="text-danger" style="font-size: 13px">{{ error|escape }}</p>
-                                {% endfor %}
+                                <div class="alert alert-danger">
+                                    <ul class="mb-0">
+                                        {% for error in form.non_field_errors %}
+                                            <li>{{ error|escape }}</li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
                             {% endif %}
                             <button type="submit" class="btn btn-primary btn-block mt-4" style="background-color: rgba(34, 38, 42, 0.7); border-color: rgba(34, 38, 42, 0.7);">Log in</button>
                         </form>

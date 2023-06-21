@@ -8,7 +8,7 @@ from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 from django.views.decorators.csrf import csrf_protect
 from django.views.decorators.cache import cache_page
-
+from django.core.exceptions import ObjectDoesNotExist
 
 # class DesktopModeView(View):
 #     def dispatch(self, request, *args, **kwargs):
@@ -59,6 +59,8 @@ def redirect_url(request, shortened_part):
 
 # @cache_page(60 * 1440)
 def myurls(request):
+    if not request.user.is_authenticated:
+        return redirect()
     template = 'tinyurl/myurls.html'
     context = {}
     # Process the search form
@@ -88,11 +90,10 @@ def delete_item(request, id):
         if request.user.is_superuser or request.user == itm.user_name:
             if request.method == 'POST':
                 itm.delete()
-                return redirect(request.META.get('HTTP_REFERER', 'myurls'))
+                return redirect('myurls')
         else:
-            return render(request, 'tinyurl/403.html', status=403)  # Return 403 Forbidden response
+            return render(request,'tinyurl/403.html',status=403)  # Return 403 Forbidden response
     else:
-        return render(request, 'tinyurl/403.html', status=403)  # Return 403 Forbidden response
-    
+        return render(request,'tinyurl/403.html',status=403)  # Return 403 Forbidden response
     context = {'itm': itm}
     return render(request, 'tinyurl/delete.html', context)
