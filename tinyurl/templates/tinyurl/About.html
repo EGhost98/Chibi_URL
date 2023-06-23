@@ -1,0 +1,104 @@
+{% extends "tinyurl/base.html" %} {% block body %}
+<div class="container mt-5">
+    <div class="card">
+        <div class="card-header text-center py-3 bg-dark text-white">
+            <h1>About <i class="fas fa-link px-2"></i> Chibi URL</h1>
+        </div>
+        <div class="card-body">
+            <p>
+                Chibi URL is a user-friendly and efficient URL Shortener service
+                that simplifies the process of transforming long and complex
+                URLs into shorter and more manageable links. With its robust
+                technology stack including Django, Python, HTML, CSS,
+                JavaScript, Bootstrap, and PostgreSQL, Chibi URL offers a
+                reliable and feature-rich solution.
+            </p>
+
+            <h2>Key Features</h2>
+            <ul>
+                <li>
+                    URL Shortening
+                </li>
+                <li>
+                    Index Your URL to easily Find Them
+                </li>
+                <li>
+                    Search Functionality
+                </li>
+                <li>
+                    User Authentication to Store Your URL's
+                </li>
+                <li>
+                    Secure Storage with PostgreSQL
+                </li>
+                <li>
+                    Card-style UI
+                </li>
+                <li>
+                    Copy to Clipboard, Visit URL, and Delete Button in each URL Cards
+                </li>
+                <li>
+                    Times Clicked Tracker with each Short Link
+                </li>
+            </ul>
+            <p>
+                Experience the convenience of Chibi URL today and streamline
+                your URL sharing process effortlessly, while maintaining control
+                over your stored links and enjoying a visually appealing user
+                interface.
+            </p>
+            <p>Created by Aditya raj Singh Chauhan.</p>
+        </div>
+    </div>
+</div>
+<style>
+    .github-icon {
+        width: 24px; /* Adjust the size as desired */
+        height: 24px; /* Adjust the size as desired */
+        color: #000; /* Adjust the color as desired */
+    }
+
+    body {
+        font-family: Arial, sans-serif;
+        background-color: rgba(
+            0,
+            0,
+            0,
+            0.7
+        ); /* Updated: Background color with 50% opacity */
+    }
+
+    .card {
+        background-color: rgba(
+            248,
+            249,
+            250,
+            0.65
+        ); /* Updated: Background color with 50% opacity */
+        border: none;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .card-header {
+        background-color: rgba(
+            255,
+            255,
+            255,
+            0.5
+        ); /* Updated: Background color with 50% opacity */
+        border-bottom: 1px solid rgba(222, 226, 230, 0.5); /* Updated: Border color with 50% opacity */
+    }
+
+    .card-title {
+        font-size: 24px;
+        font-weight: bold;
+    }
+
+    .card-body {
+        padding: 20px;
+    }
+
+    }
+</style>
+{% endblock body %}

@@ -10,12 +10,6 @@
     crossorigin="anonymous"
 />
 <div class="container mt-5 mb-5">
-    {% if user.is_authenticated %}
-    <div class="alert alert-success bg-success text-light" style="opacity: 0.8;">
-        <p class="mb-0">Welcome, {{ user.username }}!</p>
-    </div>
-{% endif %}
-
     <div class="card mt-5 mb-4">
         <div class="card-header text-center py-3 bg-dark text-white custom-header">
             <h1 class="fadeInUp custom-title">Chibi URL <i class="fas fa-link px-2"></i></h1>
@@ -28,11 +22,11 @@
                     <div class="col-md-3">
                         <button class="btn btn-success w-100" type="submit">Shorten</button>
                     </div>
-                    <div class="col-md-4">{{ form.url_index }}</div>
+                    <div class="col-md-4 text-end">{{ form.url_index }}</div>
                 </div>
             </form>
-        </div>        
-    </div>
+        </div>
+    </div>    
     {% if errors %}
     <div class="alert alert-danger mt-4" role="alert">
         <p>{{ errors }}</p>
@@ -161,6 +155,11 @@
                     </div>
                 </div>
                 {% endfor %}
+                <div class="col-md-3">
+                    <a href="{% url 'myurls' %}" class="btn btn-success btn-sm me-2" data-bs-toggle="tooltip" data-bs-placement="top" title="My URL's">
+                        <i class="fas fa-external-link-alt"></i>  My URL's
+                    </a>
+                </div>
             </div>
         </div>
     </div>
@@ -188,8 +187,11 @@
         }, 3000);
     }
 </script>
-
 <style>
+    .custom-field {
+        height: 40px; 
+    }
+    
     .custom-header {
         opacity: 0.9;
     }

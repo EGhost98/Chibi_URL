@@ -5,24 +5,36 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.views import LoginView
+from django.contrib.auth.forms import AuthenticationForm
 
 @csrf_exempt
 def clogin(request):
     if request.method == 'POST':
-        username = request.POST.get('username')
-        password = request.POST.get('password')
-        
-        user = authenticate(request, username=username, password=password)
-        
-        if user is not None:
-            login(request, user)
-            return redirect('index')  # Replace 'home' with the desired URL after login
+        form = AuthenticationForm(request, data=request.POST)
+        if form.is_valid():
+            username = form.cleaned_data.get('username')
+            password = form.cleaned_data.get('password')
+            user = authenticate(request, username=username, password=password)
+            if user is not None:
+                login(request, user)
+                messages.success(request, f"Welcome, {user.username}!")
+                return redirect('index')
         else:
-            # Handle invalid login credentials
-            return render(request, 'users/login.html', {'show_welcome_notification': True, 'error_message': 'Invalid login credentials'})
+            # If the form is invalid, display custom error messages
+            errors = form.errors.as_data()
+            error_messages = []
+            for field, field_errors in errors.items():
+                for error in field_errors:
+                    if field == 'username':
+                        error_messages.append("Username does not exist.")
+                    elif field == 'password':
+                        error_messages.append("Incorrect password.")
+                    else:
+                        error_messages.append(error.message)
     else:
-        return render(request, 'users/login.html', {'show_welcome_notification': True})
-
+        form = AuthenticationForm()
+        error_messages = None
+    return render(request, 'users/login.html', {'form': form, 'error_messages': error_messages, 'show_welcome_notification': True})
 
 
 @csrf_exempt

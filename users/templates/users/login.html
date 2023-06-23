@@ -1,4 +1,4 @@
-{% extends 'tinyurl/base.html' %}
+{% extends "tinyurl/base.html" %}
 {% block body %}
 <section>
     <div class="container">
@@ -32,13 +32,9 @@
                                     style=""
                                 />
                             </div>
-                            {% if form.non_field_errors %}
-                                <div class="alert alert-danger">
-                                    <ul class="mb-0">
-                                        {% for error in form.non_field_errors %}
-                                            <li>{{ error|escape }}</li>
-                                        {% endfor %}
-                                    </ul>
+                            {% if error_messages %}
+                                <div class="alert alert-danger" role="alert">
+                                    <strong>Please enter a correct username and password. Note that both fields may be case-sensitive.</strong>
                                 </div>
                             {% endif %}
                             <button type="submit" class="btn btn-primary btn-block mt-4" style="background-color: rgba(34, 38, 42, 0.7); border-color: rgba(34, 38, 42, 0.7);">Log in</button>
