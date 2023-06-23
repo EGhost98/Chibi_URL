@@ -12,7 +12,9 @@ Chibi URL is a user-friendly and efficient URL Shortener service that simplifies
 ![image](https://github.com/EGhost98/Chibi_URL/assets/76267623/75d424d8-852e-4bf5-9d39-64095c7748cb)
 
 ### Login and Register View
-![image](https://github.com/EGhost98/Chibi_URL/assets/76267623/08feab82-bc17-45f2-a8a4-5214b6034261) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+![image](https://github.com/EGhost98/Chibi_URL/assets/76267623/eeb71e90-96b7-4e8e-960a-6da7ba83b7e7)
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 ![image](https://github.com/EGhost98/Chibi_URL/assets/76267623/03e4977a-5691-40c1-8376-dd35f883df09)
 
 ## How to Run the Project
