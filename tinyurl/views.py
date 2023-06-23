@@ -90,7 +90,7 @@ def delete_item(request, id):
 
 @csrf_exempt
 def about_Chibi(request):
-    return render(request,'tinyurl/about.html')
+    return render(request,'tinyurl/abt.html')
 
 @csrf_exempt
 def handler404(request, exception):
