@@ -4,7 +4,7 @@ Chibi URL is a user-friendly and efficient URL Shortener service that simplifies
 ## Visit the application
 - [Chibi URL](https://chibiurl.azurewebsites.net/)
 
-## Screenshots
+## Screenshots -- 
 ### Home View
 ![image](https://github.com/EGhost98/Chibi_URL/assets/76267623/5fcb177a-c81b-46c7-a9a4-58fc8d331472)
 
