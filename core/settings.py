@@ -63,22 +63,22 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'core.wsgi.application'
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
 # DATABASES = {
 #     'default': {
-#         'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': 'Chibi_URL_01',
-#         'USER': 'eghost08',
-#         'PASSWORD': 'Quake@08',
-#         'HOST': 'eghost01.postgres.database.azure.com',  # Replace with the PostgreSQL server's IP or hostname
-#         'PORT': '5432',       # Default PostgreSQL port
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
 #     }
 # }
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'Chibi_URL_01',
+        'USER': 'eghost08',
+        'PASSWORD': 'Quake@08',
+        'HOST': 'eghost01.postgres.database.azure.com', 
+        'PORT': '5432',   
+    }
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
