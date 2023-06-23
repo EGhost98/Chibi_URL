@@ -19,7 +19,7 @@ SECRET_KEY = 'django-insecure-(i53(39ls&gmdzxbufq9gyk+pq+eh)9%j86m-r*ufs+=ft_d6k
 
 DEBUG = True
 
-ALLOWED_HOSTS = ['testchibiurl.azurewebsites.net', '127.0.0.1']
+ALLOWED_HOSTS = ['testchibiurl.azurewebsites.net', '127.0.0.1','chibiurl.azurewebsites.net',]
 
 INSTALLED_APPS = [
     'tinyurl.apps.TinyurlConfig',
