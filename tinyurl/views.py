@@ -89,7 +89,8 @@ def delete_item(request, id):
     return render(request, 'tinyurl/delete.html', context)
 
 def about(request):
-    return render(request,'tinyurl/about.html')
+    context = {}
+    return render(request,'tinyurl/about.html',context)
 
 @csrf_exempt
 def handler404(request, exception):
