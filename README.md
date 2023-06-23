@@ -51,6 +51,7 @@ The project contains the following main files and directories:
   - `views.py`: Contains the view functions or class-based views that handle the requests and define the application's behavior. (Login and Register)
   - `urls.py`: Contains the URL patterns for mapping the views to the corresponding URLs. (Login, Logout and Register)
   - `templates/users/`: Directory containing HTML templates for rendering the login and register Web Pages.
+- `manage.py`: This is a command-line utility in Django for managing various aspects of the project, such as running development servers, managing database migrations, and executing administrative tasks.
 - `README.md`: The project's readme file containing information about the application and instructions for running it.
 - `requirements.txt`: Text file listing the Python dependencies required for the project.
 
@@ -131,7 +132,7 @@ These URL patterns define the endpoints of the application and specify which vie
 - Method: `register(request)`
 
 ## Bootstrap and Enhanced UI
-The Chibi URL application utilizes Bootstrap 5, a CSS framework, to enhance the user interface and provide a responsive and visually appealing design. The Bootstrap components, such as cards, forms, and navigation, are used to create a modern and user-friendly experience.
+The Chibi URL application utilizes Bootstrap 5, a CSS framework, to enhance the user interface and provide a responsive and visually appealing design. The Bootstrap components, such as cards, forms, and navigation, are used to create a modern and user-friendly experience. The website is responsive and can work seamlessly on any device, ensuring a consistent and optimal user experience.
 
 ## JavaScript Copy to Clipboard Button
 The application includes JavaScript functionality to implement a copy to clipboard button. This feature allows users to easily copy the shortened URL to their clipboard with a single click, making it convenient to share the shortened links.
