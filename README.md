@@ -78,7 +78,6 @@ The `urls.py` file in the `users` directory defines the URL patterns for mapping
 - `'login/'`: The view for user login.
 - `'logout/'`: The view for user logout.
 - `'register/'`: The view for user registration.
-- 
 These URL patterns define the endpoints of the application and specify which view function or class-based view should handle each request.
 
 
@@ -128,15 +127,24 @@ These URL patterns define the endpoints of the application and specify which vie
 - Description: This view handles the user registration functionality. It allows users to create a new account by providing a username and password. Upon successful registration, the user is automatically logged in and redirected to the home page.
 - Method: `register(request)`
 
+## Bootstrap and Enhanced UI
+The Chibi URL application utilizes Bootstrap 5, a CSS framework, to enhance the user interface and provide a responsive and visually appealing design. The Bootstrap components, such as cards, forms, and navigation, are used to create a modern and user-friendly experience.
+
+## JavaScript Copy to Clipboard Button
+The application includes JavaScript functionality to implement a copy to clipboard button. This feature allows users to easily copy the shortened URL to their clipboard with a single click, making it convenient to share the shortened links.
+
+## Flash Messages for Form Errors and Successful Login
+Flash messages are used in the Chibi URL application to display form validation errors and successful user login notifications. When a form submission fails due to validation errors, the corresponding error messages are displayed to the user. Similarly, upon successful user login, a flash message is shown to indicate a successful login.
 
 ## Key Takeaways
 - Building a URL shortener using Django and Python.
-- Working with SQLite database for storing URL and user data.
-- User authentication and session management using Django's built-in functionalities.
-- Utilizing Django's forms for data input and validation.
-- Implementing search functionality to filter URLs based on keywords.
-- Pagination of URL items using Django's Paginator.
-
+- Creating views and mapping them to URL patterns.
+- Using Django's ORM to define and work with database models.
+- Implementing user authentication and session management.
+- Working with HTML templates and static files.
+- Styling the application using Bootstrap and CSS.
+- Implementing form validation and data processing.
+- Handling redirects and custom error pages.
   
 
 ## References
@@ -144,6 +152,6 @@ These URL patterns define the endpoints of the application and specify which vie
 - [Bootstrap Documentation](https://getbootstrap.com/docs/5.0/getting-started/introduction/)
 - [SQLite Documentation](https://www.sqlite.org/index.html)
 - [W3Schools](https://www.w3schools.com/)
-- [CodeWithHarry YouTube Channel](https://www.youtube.com/@CodeWithHarry)
-- [Authentication with Flask-Login](https://chozinthet20602.medium.com/authentication-with-flask-login-5d504af3f517)
+- [Django User Authentication in 5 Minutes ](https://medium.com/swlh/django-user-authentication-in-5-minutes-4db08c5c459a)
+- [ChatGPT by OpenAI](https://openai.com/)
 
