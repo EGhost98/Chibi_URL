@@ -68,7 +68,7 @@ def myurls(request):
         all_urls = Shortener.objects.filter(user_name=request.user)
 
     # Pagination
-    paginator = Paginator(all_urls, 6)  # Display 10 items per page
+    paginator = Paginator(all_urls, 6)  # Display 6 items per page
     page_number = request.GET.get('page')
     urls_page = paginator.get_page(page_number)
     context['search_form'] = search_form
