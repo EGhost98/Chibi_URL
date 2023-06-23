@@ -6,7 +6,7 @@ class Shortener(models.Model):
     user_name = models.ForeignKey(User, on_delete=models.CASCADE,default=1) # user cuurrently logged in to associate url
     created = models.DateTimeField(auto_now_add=True) # Hour and date a shortener was created 
     times_followed = models.PositiveIntegerField(default=0)
-    long_url = models.URLField() #The original link
+    long_url = models.URLField(max_length = 500) #The original link
     short_url = models.CharField(max_length=15, unique=True, blank=True) # shortened link https://domain/(short_url)
     url_index = models.CharField(max_length=100, blank=True) # index a url by giving it a custom name
 
