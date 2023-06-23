@@ -13,6 +13,9 @@ Chibi URL is a user-friendly and efficient URL Shortener service that simplifies
 
 ### Login and Register View
 ![image](https://github.com/EGhost98/Chibi_URL/assets/76267623/08feab82-bc17-45f2-a8a4-5214b6034261)
+
+
+
 ![image](https://github.com/EGhost98/Chibi_URL/assets/76267623/b06a3e26-ca65-45c0-85b4-022b06827bbd)
 
 
