@@ -1,5 +1,5 @@
 # Chibi URL
-A URL shortener web application
+Chibi URL is a user-friendly and efficient URL Shortener service that simplifies the process of transforming long and complex URLs into shorter and more manageable links. With its robust technology stack including Django, Python, HTML, CSS, JavaScript, Bootstrap, and SQLite, Chibi URL offers a reliable and feature-rich solution.
 
 ## Visit the application
 - [Chibi URL](https://chibiurl.azurewebsites.net/)
@@ -9,10 +9,6 @@ A URL shortener web application
 
 ## MY URL's View
 ![image](https://github.com/EGhost98/Chibi_URL/assets/76267623/5553d18d-7736-4d1a-8a5b-ce7afa77b344)
-
-
-## Description
-Chibi URL is a user-friendly and efficient URL Shortener service that simplifies the process of transforming long and complex URLs into shorter and more manageable links. With its robust technology stack including Django, Python, HTML, CSS, JavaScript, Bootstrap, and SQLite, Chibi URL offers a reliable and feature-rich solution.
 
 ## How to Run the Project
 To run the project, follow these steps:
