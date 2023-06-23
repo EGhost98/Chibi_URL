@@ -9,6 +9,13 @@
     integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM"
     crossorigin="anonymous"
 />
+{% if messages %}
+    {% for message in messages %}
+        <div class="alert alert-success bg-success text-light" style="opacity: 0.8;">
+            <p class="mb-0">{{ message }}</p>
+        </div>
+    {% endfor %}
+    {% endif %}
 <div class="container mt-5 mb-5">
     <div class="card mt-5 mb-4">
         <div class="card-header text-center py-3 bg-dark text-white custom-header">

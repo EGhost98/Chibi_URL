@@ -73,13 +73,6 @@
             </div>
         </div>        
     </nav>
-    {% if messages %}
-    {% for message in messages %}
-        <div class="alert alert-success bg-success text-light" style="opacity: 0.8;">
-            <p class="mb-0">{{ message }}</p>
-        </div>
-    {% endfor %}
-    {% endif %}
     <div class="content-wrapper flex-grow-1">
         {% block body %} {% endblock body %}
     </div>
