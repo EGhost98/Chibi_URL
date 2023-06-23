@@ -60,4 +60,4 @@ jobs:
         with:
           app-name: 'ChibiUrl'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_06C1BAA39EE548D78AC7D4000F71E35A }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_5A9B7AE18DBD4473A12AA38D6D654005 }}
