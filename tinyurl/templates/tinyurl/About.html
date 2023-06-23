@@ -1,4 +1,5 @@
-{% extends "tinyurl/base.html" %} {% block body %}
+{% extends "tinyurl/base.html" %} 
+{% block body %}
 <div class="container mt-5">
     <div class="card">
         <div class="card-header text-center py-3 bg-dark text-white">
@@ -37,9 +38,6 @@
                 <li>
                     Copy to Clipboard, Visit URL, and Delete Button in each URL Cards
                 </li>
-                <li>
-                    Times Clicked Tracker with each Short Link
-                </li>
             </ul>
             <p>
                 Experience the convenience of Chibi URL today and streamline
@@ -47,7 +45,20 @@
                 over your stored links and enjoying a visually appealing user
                 interface.
             </p>
-            <p>Created by Aditya raj Singh Chauhan.</p>
+            <p>Created by Aditya Raj Singh Chauhan.</p>
+            
+        
+            <div class="social-buttons">
+                <a href="https://www.linkedin.com/in/aditya-raj-singh-chauhan-6b2b91217/" class="btn btn-primary me-2">
+                    <i class="fab fa-linkedin"></i> LinkedIn
+                </a>
+                <a href="https://github.com/EGhost98" class="btn btn-dark me-2">
+                    <i class="fab fa-github"></i> GitHub
+                </a>
+                <a href="https://discord.com/users/476977578352050181" class="btn btn-secondary">
+                    <i class="fab fa-discord"></i> Discord
+                </a>
+            </div>
         </div>
     </div>
 </div>
@@ -65,7 +76,7 @@
             0,
             0,
             0.7
-        ); /* Updated: Background color with 50% opacity */
+        ); /* Updated: Background color with 70% opacity */
     }
 
     .card {
@@ -74,7 +85,7 @@
             249,
             250,
             0.65
-        ); /* Updated: Background color with 50% opacity */
+        ); /* Updated: Background color with 65% opacity */
         border: none;
         border-radius: 8px;
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -98,7 +109,13 @@
     .card-body {
         padding: 20px;
     }
-
+    
+    .social-buttons {
+        margin-top: 20px;
+    }
+    
+    .social-buttons .btn {
+        margin-right: 10px;
     }
 </style>
 {% endblock body %}
