@@ -11,23 +11,23 @@ Chibi URL is a user-friendly and efficient URL Shortener service that simplifies
 To run the project, follow these steps:
 
 1. Clone the repository: `git clone <repository_url>`
-2. Navigate to the project directory: `cd `
+2. Navigate to the project directory: `cd Chibi_URL`
 3. Install the dependencies: `pip install -r requirements.txt`
-4. Run the application: `python app.py`
+4. Run the application: `python manage.py runserver'
 5. Access the application in your web browser at: `http://localhost:8000`
 
-Note: Make sure you have Python and Flask installed on your system before running the project.
+Note: Make sure you have Python and Django installed on your system before running the project.
 
 ## Tech Stack Used
-Shortly is built using the following technologies:
+ChibiURL is built using the following technologies:
 
 - Python: A powerful programming language used for backend development.
 - Django: Django is a high-level Python web framework for the rapid development of secure and scalable web applications.
 - Bootstrap 5: A popular CSS framework for building responsive and stylish web interfaces.
 - CSS: Cascading Style Sheets for customizing the application's appearance.
 - SQLite: A lightweight and embedded database storing User Authentication data, URL and Analytics(i.e, Times Clicked)
-- JavaScript: JavaScript (JS) is a high-level programming language that enables dynamic and interactive behavior on web pages. Used to Make copy to clipboard Button.
-- Azure: Used for deployment of website 
+- JavaScript: JavaScript (JS) is a high-level programming language that enables dynamic and interactive behavior on web pages. Used to Make a copy to clipboard Button.
+- Azure: Used for the deployment of the website 
 
 ## The Working
 - The application uses SQLite as the database to store URL data and user information.
