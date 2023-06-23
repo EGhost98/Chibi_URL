@@ -88,9 +88,9 @@ def delete_item(request, id):
     context = {'itm': itm}
     return render(request, 'tinyurl/delete.html', context)
 
-def about(request):
-    context = {}
-    return render(request,'tinyurl/about.html',context)
+@csrf_exempt
+def about_Chibi(request):
+    return render(request,'tinyurl/about.html')
 
 @csrf_exempt
 def handler404(request, exception):
