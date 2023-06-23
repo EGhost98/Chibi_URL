@@ -6,16 +6,14 @@ Chibi URL is a user-friendly and efficient URL Shortener service that simplifies
 
 ## Screenshots
 ### Home View
-![image](https://github.com/EGhost98/Chibi_URL/assets/76267623/8619b06f-3ff0-4926-b4fd-7490bd18180a)
+![image](https://github.com/EGhost98/Chibi_URL/assets/76267623/5fcb177a-c81b-46c7-a9a4-58fc8d331472)
 
 ### MY URL's View
-![image](https://github.com/EGhost98/Chibi_URL/assets/76267623/5553d18d-7736-4d1a-8a5b-ce7afa77b344)
+![image](https://github.com/EGhost98/Chibi_URL/assets/76267623/75d424d8-852e-4bf5-9d39-64095c7748cb)
 
 ### Login and Register View
 ![image](https://github.com/EGhost98/Chibi_URL/assets/76267623/08feab82-bc17-45f2-a8a4-5214b6034261) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 ![image](https://github.com/EGhost98/Chibi_URL/assets/76267623/b06a3e26-ca65-45c0-85b4-022b06827bbd)
-
-
 
 ## How to Run the Project
 To run the project, follow these steps:
@@ -27,6 +25,7 @@ To run the project, follow these steps:
 5. Access the application in your web browser at: `http://localhost:8000`
 
 Note: Make sure you have Python and Django installed on your system before running the project.
+The application runs on the local development server when the script is executed directly.
 
 ## Tech Stack Used
 Chibi URL is built using the following technologies:
