@@ -6,7 +6,7 @@ Chibi URL is a user-friendly and efficient URL Shortener service that simplifies
 
 ## Screenshots -- 
 ### Home View
-![image](https://github.com/EGhost98/Chibi_URL/assets/76267623/5fcb177a-c81b-46c7-a9a4-58fc8d331472)
+![image](https://github.com/EGhost98/Chibi_URL/assets/76267623/c66332f5-b481-41ab-82fb-f35a86d2ea9e)
 
 ### MY URL's View
 ![image](https://github.com/EGhost98/Chibi_URL/assets/76267623/75d424d8-852e-4bf5-9d39-64095c7748cb)
@@ -142,10 +142,13 @@ These URL patterns define the endpoints of the application and specify which vie
 The Chibi URL application utilizes Bootstrap 5, a CSS framework, to enhance the user interface and provide a responsive and visually appealing design. The Bootstrap components, such as cards, forms, and navigation, are used to create a modern and user-friendly experience. The website is responsive and can work seamlessly on any device, ensuring a consistent and optimal user experience.
 
 ## JavaScript Copy to Clipboard Button
-The application includes JavaScript functionality to implement a copy to clipboard button. This feature allows users to easily copy the shortened URL to their clipboard with a single click, making it convenient to share the shortened links.
+The application includes JavaScript functionality to implement a copy-to-clipboard button. This feature allows users to easily copy the shortened URL to their clipboard with a single click, making it convenient to share the shortened links.
 
 ## Flash Messages for Form Errors and Successful Login
 Flash messages are used in the Chibi URL application to display form validation errors and successful user login notifications. When a form submission fails due to validation errors, the corresponding error messages are displayed to the user. Similarly, upon successful user login, a flash message is shown to indicate a successful login.
+
+## Custom Alias
+A custom alias feature, allows users to personalize their shortened URLs with unique and memorable aliases.
 
 ## Key Takeaways
 - Building a URL shortener using Django and Python.
