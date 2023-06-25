@@ -29,16 +29,25 @@
                     <div class="col-md-3">
                         <button class="btn btn-success w-100" type="submit">Shorten</button>
                     </div>
-                    <div class="col-md-4 text-end">{{ form.url_index }}</div>
+                    <div class="col-md-3 text-end">{{ form.url_index }}</div>
+                    <div class="col-md-3 text-end">{{ form.url_alias }}</div>
                 </div>
-            </form>
-        </div>
-    </div>    
-    {% if errors %}
+                {% if form.errors %}
     <div class="alert alert-danger mt-4" role="alert">
         <p>{{ errors }}</p>
+        {% for field in form %}
+        {% if field.name == 'url_alias' %}
+        {% for error in field.errors %}
+            <li>{{ error }}</li>
+        {% endfor %}
+        {% endif %}
+    {% endfor %}
     </div>
-    {% endif %} {% if cur %}
+    {% endif %}
+            </form>
+        </div>
+    </div>   
+    {% if cur %}
     <div class="container mt-5 fadeIn">
         <div class="row justify-content-center">
             <div class="col-md-8 col-lg-6 col-xl-4 mb-5">

@@ -7,6 +7,9 @@ from django.views import View
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
+from django.core.exceptions import ValidationError
+from django.forms.utils import ErrorList
+
 
 # @method_decorator(login_required, name='dispatch')
 # @method_decorator(csrf_protect, name='dispatch')
@@ -31,12 +34,21 @@ class IndexView(View):
             shortened_object = form.save(commit=False)
             if request.user.is_authenticated:
                 shortened_object.user_name = request.user
-            shortened_object.save()
-            context['cur'] = shortened_object
+            if shortened_object.url_alias:
+                if Shortener.objects.filter(url_alias=shortened_object.url_alias).exists():
+                    form.errors.setdefault('url_alias', ErrorList()).append("URL Alias Already Exists.")
+                else:
+                    shortened_object.short_url = shortened_object.url_alias
+            if not form.errors:
+                shortened_object.save()
+                context['cur'] = shortened_object
         else:
             context['errors'] = form.errors
         if request.user.is_authenticated:
-            last_entries = Shortener.objects.filter(user_name=request.user).order_by('-created')[1:4]
+            if not form.errors:
+                last_entries = Shortener.objects.filter(user_name=request.user).order_by('-created')[1:4]
+            else:
+                last_entries = Shortener.objects.filter(user_name=request.user).order_by('-created')[:3]
             context['last4'] = last_entries
         return render(request, self.template_name, context)
 

@@ -9,10 +9,13 @@ class ShortenerForm(forms.ModelForm):
         required=False,
         widget=forms.TextInput(attrs={"class": "form-control form-control-lg custom-field", "placeholder": "Index to URL (Optional)"})
     )
-
+    url_alias = forms.CharField(
+        required=False,
+        widget=forms.TextInput(attrs={"class": "form-control form-control-lg custom-field", "placeholder": "Custom Alias (Optional)"})
+    )
     class Meta:
         model = Shortener
-        fields = ('long_url', 'url_index',)
+        fields = ('long_url', 'url_index','url_alias',)
 
 
 class SearchForm(forms.Form):

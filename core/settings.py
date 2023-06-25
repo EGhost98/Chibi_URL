@@ -5,11 +5,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = 'django-insecure-(i53(39ls&gmdzxbufq9gyk+pq+eh)9%j86m-r*ufs+=ft_d6k'
 
-DEBUG = False
+DEBUG = True
 
 # ALLOWED_HOSTS = ['127.0.0.1','chibiurl.azurewebsites.net',]
 
-ALLOWED_HOSTS = ['chibiurl.azurewebsites.net',]
+ALLOWED_HOSTS = ['chibiurl.azurewebsites.net','*']
 
 INSTALLED_APPS = [
     'tinyurl.apps.TinyurlConfig',

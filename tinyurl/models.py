@@ -9,7 +9,8 @@ class Shortener(models.Model):
     long_url = models.URLField(max_length = 500) #The original link
     short_url = models.CharField(max_length=15, unique=True, blank=True) # shortened link https://domain/(short_url)
     url_index = models.CharField(max_length=100, blank=True) # index a url by giving it a custom name
-
+    url_alias = models.CharField(max_length=15, blank=True)
+    
     class Meta:
         ordering = ["-created"]
 
