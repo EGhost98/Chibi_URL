@@ -147,8 +147,6 @@ The application includes JavaScript functionality to implement a copy-to-clipboa
 ## Flash Messages for Form Errors and Successful Login
 Flash messages are used in the Chibi URL application to display form validation errors and successful user login notifications. When a form submission fails due to validation errors, the corresponding error messages are displayed to the user. Similarly, upon successful user login, a flash message is shown to indicate a successful login.
 
-## Custom Alias
-A custom alias feature, allows users to personalize their shortened URLs with unique and memorable aliases.
 
 ## Key Takeaways
 - Building a URL shortener using Django and Python.
