@@ -28,6 +28,9 @@
                     <div class="card h-100 custom-card">
                         <div class="card-body d-flex flex-column h-100">
                             <h4 class="card-title">{{ purls.url_index }}</h4>
+                            {% if not purls.url_index %}
+                            <br>
+                            {% endif %}
                             <h6 class="card-subtitle mb-2 text-muted">
                                 Created: {{ purls.created|date:"F d, Y H:i:s" }}
                             </h6>
@@ -54,6 +57,7 @@
                                     data-bs-toggle="tooltip"
                                     data-bs-placement="top"
                                     title="Visit URL"
+                                    target="_blank"
                                 >
                                     <i class="fas fa-external-link-alt"></i>
                                 </a>
