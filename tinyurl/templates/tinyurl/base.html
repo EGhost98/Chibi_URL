@@ -45,7 +45,7 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNavDropdown">
-                <ul class="navbar-nav">
+                <ul class="navbar-nav ms-auto">
                     {% if user.is_authenticated %}
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'myurls' %}">My URLs</a>
@@ -72,7 +72,7 @@
                 </ul>
             </div>
         </div>        
-    </nav>
+    </nav>       
     <div class="content-wrapper flex-grow-1">
         {% block body %} {% endblock body %}
     </div>
@@ -85,13 +85,13 @@
         .square-outline {
             display: inline-block;
             padding: 5px;
-            border: 2px solid #fff; /* Change border color to white */
+            border: 2px solid #fff;
             border-radius: 5px;
         }
     
         .square-outline a {
             text-decoration: none;
-            color: #fff; /* Change text color to white */
+            color: #fff;
         }
     </style>
     
