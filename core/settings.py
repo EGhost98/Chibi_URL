@@ -3,9 +3,9 @@ import os
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = 'django-insecure-(i53(39ls&gmdzxbufq9gyk+pq+eh)9%j86m-r*ufs+=ft_d6k'
+SECRET_KEY = 'sqbxjrl0+=bajfus&pd*$wt$cr-b2u6cfiokbs3x)z0=%gbu3i'
 
-DEBUG = True
+DEBUG = False
 
 # ALLOWED_HOSTS = ['127.0.0.1','chibiurl.azurewebsites.net',]
 
@@ -119,3 +119,5 @@ LOGOUT_REDIRECT_URL = '/'
 CSRF_COOKIE_HTTPONLY = True
 CSRF_COOKIE_SECURE = True
 CSRF_TRUSTED_ORIGINS = ['http://testchibiurl.azurewebsites.net',]
+SESSION_COOKIE_SECURE = True
+SECURE_SSL_REDIRECT = True
