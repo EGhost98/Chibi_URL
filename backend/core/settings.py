@@ -6,11 +6,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = 'sqbxjrl0+=bajfus&pd*$wt$cr-b2u6cfiokbs3x)z0=%gbu3i'
 
-DEBUG = True
+DEBUG = False
 
 # ALLOWED_HOSTS = ['127.0.0.1','chibiurl.azurewebsites.net',]
 
-ALLOWED_HOSTS = ['chibiurl.azurewebsites.net','*']
+ALLOWED_HOSTS = ['*']
 
 INSTALLED_APPS = [
     'tinyurl.apps.TinyurlConfig',
@@ -64,11 +64,11 @@ WSGI_APPLICATION = 'core.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.environ.get("POSTGRES_DATABASE"),
-        'USER': os.environ.get("POSTGRES_USER"),
-        'PASSWORD': os.environ.get("POSTGRES_PASSWORD"),
-        'HOST': os.environ.get("POSTGRES_HOST"),
-        'PORT': os.environ.get("POSTGRES_PORT"),
+        'NAME': os.environ.get("POSTGRES_NAME", "psotgres"),
+        'USER': os.environ.get("POSTGRES_USER", "postgres"),
+        'PASSWORD': os.environ.get("POSTGRES_PASSWORD", "postgres"),
+        'HOST': os.environ.get("POSTGRES_HOST", "localhost"),
+        'PORT': os.environ.get("POSTGRES_PORT", "5432"),
     }
 }
 
@@ -130,6 +130,6 @@ LOGOUT_REDIRECT_URL = '/'
 # CSRF settings
 CSRF_COOKIE_HTTPONLY = True
 CSRF_COOKIE_SECURE = True
-CSRF_TRUSTED_ORIGINS = ['http://testchibiurl.azurewebsites.net',]
+# CSRF_TRUSTED_ORIGINS = ['http://testchibiurl.azurewebsites.net',]
 SESSION_COOKIE_SECURE = True
 # SECURE_SSL_REDIRECT = True

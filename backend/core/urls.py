@@ -6,8 +6,8 @@ from tinyurl import views as tinyurl_views
 
 urlpatterns = [
     path('admin/', admin.site.urls, name='admin'),
-    path('', include('tinyurl.urls')),
     path('', include('users.urls')),
+    path('', include('tinyurl.urls')),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 handler404 = tinyurl_views.handler404
