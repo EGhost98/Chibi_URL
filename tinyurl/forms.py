@@ -7,7 +7,7 @@ class ShortenerForm(forms.ModelForm):
     )
     url_index = forms.CharField(
         required=False,
-        widget=forms.TextInput(attrs={"class": "form-control form-control-lg custom-field", "placeholder": "Index to URL (Optional)"})
+        widget=forms.TextInput(attrs={"class": "form-control form-control-lg custom-field", "placeholder": "Custom Name for URL (Optional)"})
     )
     url_alias = forms.CharField(
         required=False,
