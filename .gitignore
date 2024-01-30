@@ -10,6 +10,7 @@ tinyurl/migrations/
 tinyurl/.cph/
 users/__pycahe__/
 users/migrations/
+core/__pycahe__/
 
 # Backup files # 
 *.bak 
