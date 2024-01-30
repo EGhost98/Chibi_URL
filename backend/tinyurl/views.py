@@ -9,10 +9,13 @@ from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 from django.core.exceptions import ValidationError
 from django.forms.utils import ErrorList
+from django.conf import settings
+from django.core.cache.backends.base import DEFAULT_TIMEOUT
+from django.views.decorators.cache import cache_page
+from django.core.cache import cache
 
+CACHE_TTL = getattr(settings, 'CACHE_TTL', DEFAULT_TIMEOUT)
 
-# @method_decorator(login_required, name='dispatch')
-# @method_decorator(csrf_protect, name='dispatch')
 class IndexView(View):
     @method_decorator(csrf_exempt)
     def dispatch(self, request, *args, **kwargs):
@@ -23,7 +26,11 @@ class IndexView(View):
     def get(self, request):
         context = {'form': self.form_class()}
         if request.user.is_authenticated:
-            last_entries = Shortener.objects.filter(user_name=request.user).order_by('-created')[:3]
+            cache_key = f"last4:{request.user.id}"
+            last_entries = cache.get(cache_key)
+            if not last_entries:
+                last_entries = Shortener.objects.filter(user_name=request.user).order_by('-created')[:3]
+                cache.set(cache_key, last_entries)
             context['last4'] = last_entries
         return render(request, self.template_name, context)
     
@@ -39,39 +46,47 @@ class IndexView(View):
                     form.errors.setdefault('url_alias', ErrorList()).append("URL Alias Already Exists.")
                 else:
                     shortened_object.short_url = shortened_object.url_alias
+
             if not form.errors:
                 shortened_object.save()
                 context['cur'] = shortened_object
         else:
             context['errors'] = form.errors
         if request.user.is_authenticated:
+            cache_key = f"last4:{request.user.id}"
+            cache.delete(cache_key) 
             if not form.errors:
                 last_entries = Shortener.objects.filter(user_name=request.user).order_by('-created')[1:4]
+                cache.set(cache_key, last_entries)
             else:
                 last_entries = Shortener.objects.filter(user_name=request.user).order_by('-created')[:3]
+                cache.set(cache_key, last_entries)
             context['last4'] = last_entries
         return render(request, self.template_name, context)
 
-@csrf_exempt
+
 def redirect_url(request, shortened_part):
+    cache_key = f"short_url:{shortened_part}"
+    cached_url = cache.get(cache_key)
+    if cached_url:
+        return HttpResponseRedirect(cached_url)
     try:
         shortener = Shortener.objects.get(short_url=shortened_part)
         shortener.times_followed += 1
         shortener.save()
+        cache.set(cache_key, shortener.long_url)
         return HttpResponseRedirect(shortener.long_url)
     except Shortener.DoesNotExist:
-        return render(request, 'tinyurl/404.html', status=404) # Custom 404 Errors
+        return render(request, 'tinyurl/404.html', status=404)
 
-@csrf_exempt
+
 @login_required
 def myurls(request):
     template = 'tinyurl/myurls.html'
     context = {}
-    # Process the search form
     search_form = SearchForm(request.GET)
     if search_form.is_valid():
         query = search_form.cleaned_data.get('query')
-        # Filter the queryset based on the search query
         if query:
             all_urls = Shortener.objects.filter(user_name=request.user).filter(url_index__icontains=query) | Shortener.objects.filter(user_name=request.user).filter(long_url__icontains=query) | Shortener.objects.filter(user_name=request.user).filter(short_url__icontains=query)
         else:
@@ -80,14 +95,14 @@ def myurls(request):
         all_urls = Shortener.objects.filter(user_name=request.user)
 
     # Pagination
-    paginator = Paginator(all_urls, 6)  # Display 6 items per page
+    paginator = Paginator(all_urls, 6) 
     page_number = request.GET.get('page')
     urls_page = paginator.get_page(page_number)
     context['search_form'] = search_form
     context['myurls'] = urls_page
     return render(request, template, context)
 
-@csrf_exempt
+
 @login_required
 def delete_item(request, id):
     itm = Shortener.objects.get(id=id)
@@ -100,10 +115,11 @@ def delete_item(request, id):
     context = {'itm': itm}
     return render(request, 'tinyurl/delete.html', context)
 
-@csrf_exempt
+
+@cache_page(CACHE_TTL)
 def about_Chibi(request):
     return render(request,'tinyurl/abt.html')
 
-@csrf_exempt
+@cache_page(CACHE_TTL)
 def handler404(request, exception):
     return render(request, 'tinyurl/404.html', status=404)
