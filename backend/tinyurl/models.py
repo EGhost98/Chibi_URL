@@ -25,5 +25,11 @@ class Shortener(models.Model):
     
     def save(self, *args, **kwargs):
         if not self.short_url:  
-            self.short_url = create_shortened_url(self)
+            self.short_url = create_shortened_url(self.long_url)
         super().save(*args, **kwargs)
+
+class Counter(models.Model):
+    value = models.BigIntegerField(default=0)
+    
+    def __str__(self):
+        return f'Counter - {self.value}'

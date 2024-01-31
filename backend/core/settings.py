@@ -4,11 +4,9 @@ from dotenv import load_dotenv
 load_dotenv()
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = 'sqbxjrl0+=bajfus&pd*$wt$cr-b2u6cfiokbs3x)z0=%gbu3i'
+SECRET_KEY = os.environ.get('SECRET_KEY','sqbxjrl0+=bajfus&pd*$wt$cr-b2u6cfiokbs3x)z0=%gbu3i')
 
-DEBUG = True
-
-# ALLOWED_HOSTS = ['127.0.0.1','chibiurl.azurewebsites.net',]
+DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 

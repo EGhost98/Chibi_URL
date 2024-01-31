@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Shortener
+from .models import Shortener, Counter
 # Register your models here.
 admin.site.site_header = "URL_Shortener Admininstration"
 admin.site.site_title = "URL_Shortener"
@@ -12,3 +12,4 @@ class TinyAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Shortener,TinyAdmin,)
+admin.site.register(Counter,)
