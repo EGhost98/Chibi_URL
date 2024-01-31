@@ -6,7 +6,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = 'sqbxjrl0+=bajfus&pd*$wt$cr-b2u6cfiokbs3x)z0=%gbu3i'
 
-DEBUG = False
+DEBUG = True
 
 # ALLOWED_HOSTS = ['127.0.0.1','chibiurl.azurewebsites.net',]
 
@@ -91,19 +91,21 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
-
 CACHES = {
     'default': {
         'BACKEND': 'django_redis.cache.RedisCache',
-        'LOCATION': os.environ.get("REDIS_URL", "redis://localhost:6379/1"),
+        'LOCATION': os.environ.get("REDIS_HOST", "redis://localhost:6379/1"),
         'OPTIONS': {
             'CLIENT_CLASS': 'django_redis.client.DefaultClient',
+            'PASSWORD': os.environ.get("REDIS_PASSWORD", "redis"),
         },
+        'TIMEOUT': 60 * 15, 
     }
 }
 
-# Cache time to live is 3 hours.
-CACHE_TTL = 60 * 60 * 3
+
+# Cache time to live is 15 mins.
+CACHE_TTL = 60 * 15
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
