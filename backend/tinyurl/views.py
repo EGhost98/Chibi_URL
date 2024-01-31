@@ -26,11 +26,7 @@ class IndexView(View):
     def get(self, request):
         context = {'form': self.form_class()}
         if request.user.is_authenticated:
-            cache_key = f"last4:{request.user.id}"
-            last_entries = cache.get(cache_key)
-            if not last_entries:
-                last_entries = Shortener.objects.filter(user_name=request.user).order_by('-created')[:3]
-                cache.set(cache_key, last_entries)
+            last_entries = Shortener.objects.filter(user_name=request.user).order_by('-created')[:3]
             context['last4'] = last_entries
         return render(request, self.template_name, context)
     
@@ -46,21 +42,16 @@ class IndexView(View):
                     form.errors.setdefault('url_alias', ErrorList()).append("URL Alias Already Exists.")
                 else:
                     shortened_object.short_url = shortened_object.url_alias
-
             if not form.errors:
                 shortened_object.save()
                 context['cur'] = shortened_object
         else:
             context['errors'] = form.errors
         if request.user.is_authenticated:
-            cache_key = f"last4:{request.user.id}"
-            cache.delete(cache_key) 
             if not form.errors:
                 last_entries = Shortener.objects.filter(user_name=request.user).order_by('-created')[1:4]
-                cache.set(cache_key, last_entries)
             else:
                 last_entries = Shortener.objects.filter(user_name=request.user).order_by('-created')[:3]
-                cache.set(cache_key, last_entries)
             context['last4'] = last_entries
         return render(request, self.template_name, context)
 
